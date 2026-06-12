@@ -4,6 +4,7 @@
 #include "character.h"
 #include "UI.h"
 #include "Utill.h"
+#include "Art.h"
 
 void NowStatus(int PlayerHP, int EnemyHP)
 {

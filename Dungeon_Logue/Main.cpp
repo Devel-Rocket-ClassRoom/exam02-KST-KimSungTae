@@ -3,6 +3,7 @@
 #include "Main_Menu.h"
 #include "Dungeon.h"
 #include "Map.h"
+#include "Art.h"
 
 using namespace std;
 
