@@ -459,9 +459,13 @@ void PrintMonster(int Level, int CurrentHP, int MaxHP,int Bossif, std::string Na
 
 
     // ==================== 체력바 추가 ====================
-    printf("\n");
-    PrintMonsterHealthBar(CurrentHP, MaxHP, Name);
-    printf("\n");
+    if (RandomMonster >= 0)
+    {
+        printf("\n");
+        PrintMonsterHealthBar(CurrentHP, MaxHP, Name);
+        printf("\n");
+    }
+    
 }
 
 
