@@ -38,18 +38,19 @@ int main()
     GPlayer.AttackPowerMin = 15;
     GPlayer.AttackPowerMax = 115;
     GPlayer.Defense = 5;
-    GPlayer.Money = 500;
+    GPlayer.Money = 1000;
 	GPlayer.CriticalChance = 10;
 	GPlayer.Luck = 0;
 	GPlayer.Skill1 = 0;
 	GPlayer.Skill2 = 0;
 	GPlayer.Skill3 = 0;
-	GPlayer.MonsterLevel = 18;
+	GPlayer.MonsterLevel = -1;
     GPlayer.Level = 1;
     GPlayer.Experience = 0;
-    GPlayer.ExperienceToNextLevel = 100;
+    GPlayer.ExperienceToNextLevel = 1;
     GPlayer.StatPoints = 0;
-	GPlayer.Bossif = 1;
+	GPlayer.Bossif = 0;
+    GPlayer.HaveKey = 0;
 
     int MenuSelect=-1;
     //initScreen();

@@ -13,6 +13,7 @@ void PrintMonsterHealthBar(int current, int maxHP, std::string Name);
 void PrintChest();
 void PrintClear();
 void Player_LevelUp(int Reward);
+void PrintGameOver();
 
 
 //플레이어 디폴트
@@ -42,7 +43,7 @@ struct Player
 	int StatPoints = 0;
 
     int Bossif = 0;
-
+    int HaveKey = 0;
 
 };
 

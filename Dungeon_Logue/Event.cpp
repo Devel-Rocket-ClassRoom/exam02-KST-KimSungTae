@@ -1,6 +1,6 @@
 #include "main.h"
 #include "character.h"
-#include "Character_Menu.h"
+#include "UI.h"
 #include "Map.h"
 #include "Event.h"
 #include "Utill.h"
@@ -108,8 +108,7 @@ void Monster_Event_Encounter(int InLevel,int Bossif)
 	int EnemyCriticalChance = Level * 3;
 	int BattleTurn = 1;
 	bool IsDefending = false;
-
-
+	bool IsEnemyCritical = rand() % 100 < EnemyCriticalChance;
 
 
 
@@ -120,6 +119,7 @@ void Monster_Event_Encounter(int InLevel,int Bossif)
 	{
 		int PlayerDamage = GetRandomRange(GPlayer.AttackPowerMin, GPlayer.AttackPowerMax);
 		int EnemyDamage = GetRandomRange(Monster.AttackPowerMin, Monster.AttackPowerMax);
+		
 
 		system("cls");
 		PrintPlayerBattleState(GPlayer.Health, GPlayer.MaxHealth, GPlayer.Mana, GPlayer.MaxMana,
@@ -139,8 +139,15 @@ void Monster_Event_Encounter(int InLevel,int Bossif)
 		}
 
 		printf("===================== 턴 %d =====================\n", BattleTurn);
-		printf("플레이어 HP: %d / %d\n", GPlayer.Health, GPlayer.MaxHealth);
-		printf("적       HP: %d / %d\n", Monster.Health, Monster.MaxHealth);
+		printf("플레이어 HP: %d / %d\t<적의 다음 행동>\n", GPlayer.Health, GPlayer.MaxHealth);
+		if (Bossif == 0)
+		{
+			printf("적       HP: %d / %d\t\t%s\n", Monster.Health, Monster.MaxHealth, IsEnemyCritical ? " 치명적인 일격" : "   일반 공격");
+		}
+		else
+		{
+			printf("적       HP: %d / %d\t\t\t?\n", Monster.Health, Monster.MaxHealth);
+		}
 		printf("================================================\n");
 
 
@@ -185,8 +192,15 @@ void Monster_Event_Encounter(int InLevel,int Bossif)
 				}
 
 				printf("===================== 턴 %d =====================\n", BattleTurn);
-				printf("플레이어 HP: %d / %d\n", GPlayer.Health, GPlayer.MaxHealth);
-				printf("적       HP: %d / %d\n", Monster.Health, Monster.MaxHealth);
+				printf("플레이어 HP: %d / %d\t<적의 다음 행동>\n", GPlayer.Health, GPlayer.MaxHealth);
+				if (Bossif == 0)
+				{
+					printf("적       HP: %d / %d\t\t%s\n", Monster.Health, Monster.MaxHealth, IsEnemyCritical ? " 치명적인 일격" : "   일반 공격");
+				}
+				else
+				{
+					printf("적       HP: %d / %d\t\t\t?\n", Monster.Health, Monster.MaxHealth);
+				}
 				printf("================================================\n");
 			}
 			if (SelectAction == 0)  // 공격
@@ -397,14 +411,16 @@ void Monster_Event_Encounter(int InLevel,int Bossif)
 		{
 			int BaseDamage = EnemyDamage;
 
-			if (rand() % 100 < EnemyCriticalChance)
+			if (IsEnemyCritical)
 			{
 				printf("적의 크리티컬 히트! %d의 두배인 %d데미지를 받았음.\n", BaseDamage, BaseDamage * 2);
+				IsEnemyCritical = rand() % 100 < EnemyCriticalChance;
 				BaseDamage *= 2;
 			}
 			else
 			{
 				printf("적의 공격 히트! %d의 데미지를 받았음.\n", BaseDamage);
+				IsEnemyCritical = rand() % 100 < EnemyCriticalChance;
 			}
 
 			// 방어력 적용 + 방어 상태(방어 선택 시) 보너스
@@ -426,6 +442,12 @@ void Monster_Event_Encounter(int InLevel,int Bossif)
 			GPlayer.Health -= FinalDamage;
 			IsDefending = false;  // 방어 효과 1회 소모
 
+			GPlayer.Mana += FinalDamage / 10; // 받은 데미지의 10%만큼 마나 회복
+			if (GPlayer.Mana > GPlayer.MaxMana)
+			{
+				GPlayer.Mana = GPlayer.MaxMana;
+			}
+
 			BattleTurn++;
 			NowStatus(GPlayer.Health, Monster.Health);
 		}
@@ -438,7 +460,7 @@ void Monster_Event_Encounter(int InLevel,int Bossif)
 	if (GPlayer.Health > 0)
 	{
 		GPlayer.Money += Monster.Reward;
-		printf("적을 물리쳤습니다!\n");
+		printf("%s을 물리쳤습니다!\n",Monster.Name.c_str());
 		printf("%d골드를 획득 했습니다.\n", Monster.Reward);
 		printf("%d의 경험치를 획득했습니다.", (int)(Monster.Reward * 1.5));
 		GPlayer.Experience += (int)(Monster.Reward * 1.5);
@@ -451,7 +473,7 @@ void Monster_Event_Encounter(int InLevel,int Bossif)
 	}
 	else
 	{
-		printf("플레이어가 패배했습니다. 게임 오버.\n");
+		PrintGameOver();
 		Sleep(_getch());
 	}
 }
@@ -784,72 +806,80 @@ int Shop_Event_Encounter()
 			system("cls");
 			PrintPlayerState(GPlayer.Health, GPlayer.MaxHealth, GPlayer.Mana, GPlayer.MaxMana, GPlayer.AttackPowerMin, GPlayer.AttackPowerMax, GPlayer.Defense, GPlayer.Money);
 			PrintNPC();
-			printf(" > 1. 체력 30 추가(50골드)       \t2. 공격력 3 증가(70골드)       \t3. 방어력 2 증가(90골드)      \t4. 마나 30 추가(50골드)\n");
+			printf(" > 1. 체력 30 추가(50골드)      \t2. 공격력 3 증가(70골드)       \t 3. 방어력 2 증가(90골드)      \t 4. 마나 30 추가(50골드)\n");
 			// 5-> 데미지를 2배로 주는 스킬		6->데미지 1.5배 + 항상 최대 데미지 보장	7->데미지 1배 + 가한 피해의 50% 회복
-			printf("   5. 맹렬한 참격 구매(200골드)       \t6. 예리한 일격 구매(200골드) \t7. 흡혈의 일격(200골드)      \t8. 나가기  ");
+			printf("   5. 맹렬한 참격 구매%s       6. 예리한 일격 구매%s   7. 흡혈의 일격%s       8. 나가기  "
+				, GPlayer.Skill1 == 0 ? "(200골드)  " : "(구매 완료)", GPlayer.Skill2 == 0 ? "(200골드)  " : "(구매 완료)", GPlayer.Skill3 == 0 ? "(200골드)  " : "(구매 완료)");
 		}
 		else if (Select_NPC_Menu == 1)
 		{
 			system("cls");
 			PrintPlayerState(GPlayer.Health, GPlayer.MaxHealth, GPlayer.Mana, GPlayer.MaxMana, GPlayer.AttackPowerMin, GPlayer.AttackPowerMax, GPlayer.Defense, GPlayer.Money);
 			PrintNPC();
-			printf("   1. 체력 30 추가(50골드)     \t      > 2. 공격력 3 증가(70골드)       \t3. 방어력 2 증가(90골드)      \t4. 마나 30 추가(50골드)\n");
+			printf("   1. 체력 30 추가(50골드)    \t      > 2. 공격력 3 증가(70골드)       \t 3. 방어력 2 증가(90골드)      \t 4. 마나 30 추가(50골드)\n");
 			// 5-> 데미지를 2배로 주는 스킬		6->데미지 1.5배 + 항상 최대 데미지 보장	7->데미지 1배 + 가한 피해의 50% 회복
-			printf("   5. 맹렬한 참격 구매(200골드)       \t6. 예리한 일격 구매(200골드) \t7. 흡혈의 일격(200골드)      \t8. 나가기  ");
+			printf("   5. 맹렬한 참격 구매%s       6. 예리한 일격 구매%s   7. 흡혈의 일격%s       8. 나가기  "
+				, GPlayer.Skill1 == 0 ? "(200골드)  " : "(구매 완료)", GPlayer.Skill2 == 0 ? "(200골드)  " : "(구매 완료)", GPlayer.Skill3 == 0 ? "(200골드)  " : "(구매 완료)");
 		}
 		else if (Select_NPC_Menu == 2)
 		{
 			system("cls");
 			PrintPlayerState(GPlayer.Health, GPlayer.MaxHealth, GPlayer.Mana, GPlayer.MaxMana, GPlayer.AttackPowerMin, GPlayer.AttackPowerMax, GPlayer.Defense, GPlayer.Money);
 			PrintNPC();
-			printf("   1. 체력 30 추가(50골드)       \t2. 공격력 3 증가(70골드)      > 3. 방어력 2 증가(90골드)      \t4. 마나 30 추가(50골드)\n");
+			printf("   1. 체력 30 추가(50골드)      \t2. 공격력 3 증가(70골드)       > 3. 방어력 2 증가(90골드)      \t 4. 마나 30 추가(50골드)\n");
 			// 5-> 데미지를 2배로 주는 스킬		6->데미지 1.5배 + 항상 최대 데미지 보장	7->데미지 1배 + 가한 피해의 50% 회복
-			printf("   5. 맹렬한 참격 구매(200골드)       \t6. 예리한 일격 구매(200골드) \t7. 흡혈의 일격(200골드)      \t8. 나가기  ");
+			printf("   5. 맹렬한 참격 구매%s       6. 예리한 일격 구매%s   7. 흡혈의 일격%s       8. 나가기  "
+				, GPlayer.Skill1 == 0 ? "(200골드)  " : "(구매 완료)", GPlayer.Skill2 == 0 ? "(200골드)  " : "(구매 완료)", GPlayer.Skill3 == 0 ? "(200골드)  " : "(구매 완료)");
 		}
 		else if (Select_NPC_Menu == 3)
 		{
 			system("cls");
 			PrintPlayerState(GPlayer.Health, GPlayer.MaxHealth, GPlayer.Mana, GPlayer.MaxMana, GPlayer.AttackPowerMin, GPlayer.AttackPowerMax, GPlayer.Defense, GPlayer.Money);
 			PrintNPC();
-			printf("   1. 체력 30 추가(50골드)       \t2. 공격력 3 증가(70골드)       \t3. 방어력 2 증가(90골드)      > 4. 마나 30 추가(50골드)\n");
+			printf("   1. 체력 30 추가(50골드)      \t2. 공격력 3 증가(70골드)       \t 3. 방어력 2 증가(90골드)      > 4. 마나 30 추가(50골드)\n");
 			// 5-> 데미지를 2배로 주는 스킬		6->데미지 1.5배 + 항상 최대 데미지 보장	7->데미지 1배 + 가한 피해의 50% 회복
-			printf("   5. 맹렬한 참격 구매(200골드)       \t6. 예리한 일격 구매(200골드) \t7. 흡혈의 일격(200골드)      \t8. 나가기  ");
+			printf("   5. 맹렬한 참격 구매%s       6. 예리한 일격 구매%s   7. 흡혈의 일격%s       8. 나가기  "
+				, GPlayer.Skill1 == 0 ? "(200골드)  " : "(구매 완료)", GPlayer.Skill2 == 0 ? "(200골드)  " : "(구매 완료)", GPlayer.Skill3 == 0 ? "(200골드)  " : "(구매 완료)");
 		}
 		else if (Select_NPC_Menu == 4)
 		{
 			system("cls");
 			PrintPlayerState(GPlayer.Health, GPlayer.MaxHealth, GPlayer.Mana, GPlayer.MaxMana, GPlayer.AttackPowerMin, GPlayer.AttackPowerMax, GPlayer.Defense, GPlayer.Money);
 			PrintNPC();
-			printf("   1. 체력 30 추가(50골드)       \t2. 공격력 3 증가(70골드)       \t3. 방어력 2 증가(90골드)      \t4. 마나 30 추가(50골드)\n");
+			printf("   1. 체력 30 추가(50골드)      \t2. 공격력 3 증가(70골드)       \t 3. 방어력 2 증가(90골드)      \t 4. 마나 30 추가(50골드)\n");
 			// 5-> 데미지를 2배로 주는 스킬		6->데미지 1.5배 + 항상 최대 데미지 보장	7->데미지 1배 + 가한 피해의 50% 회복
-			printf(" > 5. 맹렬한 참격 구매(200골드)       \t6. 예리한 일격 구매(200골드) \t7. 흡혈의 일격(200골드)      \t8. 나가기  ");
+			printf(" > 5. 맹렬한 참격 구매%s       6. 예리한 일격 구매%s   7. 흡혈의 일격%s       8. 나가기  "
+				,GPlayer.Skill1==0 ? "(200골드)  " : "(구매 완료)", GPlayer.Skill2 == 0 ? "(200골드)  " : "(구매 완료)", GPlayer.Skill3 == 0 ? "(200골드)  " : "(구매 완료)");
 		}
 		else if (Select_NPC_Menu == 5)
 		{
 			system("cls");
 			PrintPlayerState(GPlayer.Health, GPlayer.MaxHealth, GPlayer.Mana, GPlayer.MaxMana, GPlayer.AttackPowerMin, GPlayer.AttackPowerMax, GPlayer.Defense, GPlayer.Money);
 			PrintNPC();
-			printf("   1. 체력 30 추가(50골드)       \t2. 공격력 3 증가(70골드)       \t3. 방어력 2 증가(90골드)      \t4. 마나 30 추가(50골드)\n");
+			printf("   1. 체력 30 추가(50골드)      \t2. 공격력 3 증가(70골드)       \t 3. 방어력 2 증가(90골드)      \t 4. 마나 30 추가(50골드)\n");
 			// 5-> 데미지를 2배로 주는 스킬		6->데미지 1.5배 + 항상 최대 데미지 보장	7->데미지 1배 + 가한 피해의 50% 회복
-			printf("   5. 맹렬한 참격 구매(200골드)       > 6. 예리한 일격 구매(200골드) \t7. 흡혈의 일격(200골드)      \t8. 나가기  ");
+			printf("   5. 맹렬한 참격 구매%s     > 6. 예리한 일격 구매%s   7. 흡혈의 일격%s       8. 나가기  "
+				, GPlayer.Skill1 == 0 ? "(200골드)  " : "(구매 완료)", GPlayer.Skill2 == 0 ? "(200골드)  " : "(구매 완료)", GPlayer.Skill3 == 0 ? "(200골드)  " : "(구매 완료)");
 		}
 		else if (Select_NPC_Menu == 6)
 		{
 			system("cls");
 			PrintPlayerState(GPlayer.Health, GPlayer.MaxHealth, GPlayer.Mana, GPlayer.MaxMana, GPlayer.AttackPowerMin, GPlayer.AttackPowerMax, GPlayer.Defense, GPlayer.Money);
 			PrintNPC();
-			printf("   1. 체력 30 추가(50골드)       \t2. 공격력 3 증가(70골드)       \t3. 방어력 2 증가(90골드)      \t4. 마나 30 추가(50골드)\n");
+			printf("   1. 체력 30 추가(50골드)      \t2. 공격력 3 증가(70골드)       \t 3. 방어력 2 증가(90골드)      \t 4. 마나 30 추가(50골드)\n");
 			// 5-> 데미지를 2배로 주는 스킬		6->데미지 1.5배 + 항상 최대 데미지 보장	7->데미지 1배 + 가한 피해의 50% 회복
-			printf("   5. 맹렬한 참격 구매(200골드)       \t6. 예리한 일격 구매(200골드)  > 7. 흡혈의 일격(200골드)      \t8. 나가기   ");
+			printf("   5. 맹렬한 참격 구매%s       6. 예리한 일격 구매%s > 7. 흡혈의 일격%s       8. 나가기  "
+				, GPlayer.Skill1 == 0 ? "(200골드)  " : "(구매 완료)", GPlayer.Skill2 == 0 ? "(200골드)  " : "(구매 완료)", GPlayer.Skill3 == 0 ? "(200골드)  " : "(구매 완료)");
 		}
 		else if (Select_NPC_Menu == 7)
 		{
 			system("cls");
 			PrintPlayerState(GPlayer.Health, GPlayer.MaxHealth, GPlayer.Mana, GPlayer.MaxMana, GPlayer.AttackPowerMin, GPlayer.AttackPowerMax, GPlayer.Defense, GPlayer.Money);
 			PrintNPC();
-			printf("   1. 체력 30 추가(50골드)       \t2. 공격력 3 증가(70골드)       \t3. 방어력 2 증가(90골드)      \t4. 마나 30 추가(50골드)\n");
+			printf("   1. 체력 30 추가(50골드)      \t2. 공격력 3 증가(70골드)       \t 3. 방어력 2 증가(90골드)      \t 4. 마나 30 추가(50골드)\n");
 			// 5-> 데미지를 2배로 주는 스킬		6->데미지 1.5배 + 항상 최대 데미지 보장	7->데미지 1배 + 가한 피해의 50% 회복
-			printf("   5. 맹렬한 참격 구매(200골드)       \t6. 예리한 일격 구매(200골드)    7. 흡혈의 일격(200골드)       > 8. 나가기   ");
+			printf("   5. 맹렬한 참격 구매%s       6. 예리한 일격 구매%s   7. 흡혈의 일격%s     > 8. 나가기  "
+				, GPlayer.Skill1 == 0 ? "(200골드)  " : "(구매 완료)", GPlayer.Skill2 == 0 ? "(200골드)  " : "(구매 완료)", GPlayer.Skill3 == 0 ? "(200골드)  " : "(구매 완료)");
 		}
 
 
@@ -873,6 +903,7 @@ int Shop_Event_Encounter()
 						GPlayer.Health += 30;
 						printf("\n체력이 증가했습니다! (체력 +30)\n");
 						Sleep(_getch());
+						break;
 					}
 				}
 				else if (Select_NPC_Menu == 1)
@@ -890,6 +921,7 @@ int Shop_Event_Encounter()
 						GPlayer.AttackPowerMax += 3;
 						printf("\n공격력이 증가했습니다! (공격력 +3)\n");
 						Sleep(_getch());
+						break;
 					}
 				}
 				else if (Select_NPC_Menu == 2)
@@ -906,6 +938,7 @@ int Shop_Event_Encounter()
 						GPlayer.Defense += 2;
 						printf("\n방어력이 증가했습니다! (방어력 +2)\n");
 						Sleep(_getch());
+						break;
 					}
 				}
 				else if (Select_NPC_Menu == 3)
@@ -923,6 +956,7 @@ int Shop_Event_Encounter()
 						GPlayer.Mana += 30;
 						printf("\n마나가 증가했습니다! (마나 +30)\n");
 						Sleep(_getch());
+						break;
 					}
 				}
 				else if (Select_NPC_Menu == 4)
@@ -947,6 +981,7 @@ int Shop_Event_Encounter()
 							GPlayer.Skill1 = 1; //맹렬한 참격 구매
 							printf("\n맹렬한 참격을 구매했습니다! (맹렬한 참격: 데미지를 2배로 주는 스킬)\n");
 							Sleep(_getch());
+							break;
 						}
 					}
 				}
@@ -972,6 +1007,7 @@ int Shop_Event_Encounter()
 							GPlayer.Skill2 = 1; //예리한 일격 구매
 							printf("\n예리한 일격을 구매했습니다! (예리한 일격: 데미지를 1.5배로 주는 스킬 + 항상 최대 데미지 보장)\n");
 							Sleep(_getch());
+							break;
 						}
 					}
 				}
@@ -997,6 +1033,7 @@ int Shop_Event_Encounter()
 							GPlayer.Skill3 = 1; //흡혈의 일격 구매
 							printf("\n흡혈의 일격을 구매했습니다! (흡혈의 일격: 데미지 1배 + 가한 피해의 50% 회복)\n");
 							Sleep(_getch());
+							break;
 						}
 					}
 
@@ -1059,11 +1096,11 @@ int  Healspot_Event_Encounter()
 
 		if (SelectMenu == 0)
 		{
-			printf("> 1. 최대 체력의 30%, 마나의 50%를 회복한다.(재방문 불가능)\n\n");
+			printf("> 1. 최대 체력의 30%%, 마나의 50%%를 회복한다.(재방문 불가능)\n\n");
 		}
 		else
 		{
-			printf("  1. 최대 체력의 30%, 마나의 50%를 회복한다.(재방문 불가능)\n\n");
+			printf("  1. 최대 체력의 30%%, 마나의 50%%를 회복한다.(재방문 불가능)\n\n");
 		}
 		if (SelectMenu == 1)
 		{
@@ -1141,11 +1178,11 @@ int  Healspot_RandomEvent_Encounter()
 
 		if (SelectMenu == 0)
 		{
-			printf("> 1. 최대 체력의 30%, 마나의 50%를 회복한다.(재방문 불가능)\n\n");
+			printf("> 1. 최대 체력의 30%%, 마나의 50%%를 회복한다.(재방문 불가능)\n\n");
 		}
 		else
 		{
-			printf("  1. 최대 체력의 30%, 마나의 50%를 회복한다.(재방문 불가능)\n\n");
+			printf("  1. 최대 체력의 30%%, 마나의 50%%를 회복한다.(재방문 불가능)\n\n");
 		}
 		if (SelectMenu == 1)
 		{
@@ -1291,6 +1328,8 @@ void Middle_Boss_Encounter()
 {
 	srand(time(0));
 	Monster_Event_Encounter(GPlayer.MonsterLevel + 6, GPlayer.Bossif);
+	GPlayer.HaveKey = 1;
+	OpenMiddleBossDoor();
 }
 
 //8 최종보스 인카운트

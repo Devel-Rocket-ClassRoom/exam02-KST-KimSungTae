@@ -21,7 +21,7 @@
     <ClCompile Include="Dungeon.cpp">
       <Filter>소스 파일</Filter>
     </ClCompile>
-    <ClCompile Include="Character_Menu.cpp">
+    <ClCompile Include="UI.cpp">
       <Filter>소스 파일</Filter>
     </ClCompile>
     <ClCompile Include="Map.cpp">
@@ -56,7 +56,7 @@
     <ClInclude Include="character.h">
       <Filter>헤더 파일</Filter>
     </ClInclude>
-    <ClInclude Include="Character_Menu.h">
+    <ClInclude Include="UI.h">
       <Filter>헤더 파일</Filter>
     </ClInclude>
     <ClInclude Include="Event.h">

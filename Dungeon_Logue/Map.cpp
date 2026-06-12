@@ -1,7 +1,8 @@
 #include "Main.h"
-#include "Character_Menu.h"
+#include "UI.h"
 #include "Event.h"
 #include "Character.h"
+
 
 
 void SetColor(int Color)
@@ -13,30 +14,55 @@ char map[20][100] = {
 	{"311111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111114"},
 	{"200000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000002"},
 	{"2031n1n1n1n1n1n1n1n1400000000000314000000000000031n140000031n1n1n1n1n1n1400000000000000000000000002"},
-	{"2020omo?omomo?omo?o8200000000000202000000000000027o820000027o0o0o0o0o0o0200000003111111111111111402"},
+	{"2020omo?omomo?omo?o8200000000000272000000000000027o820000027o?omo?o?omo8200000003111111111111111402"},
 	{"2051h1+o+1+o+1h1h1+oj00031n1n1n1+o+1n1n140000000ko+160000051h1+o+1h1h1+oj00000002000000000000000202"},
-	{"2000002m202m2000002m200028o0o0o0o0o0o0o020000000202000000000002020000020200000002000000000000000202"},
+	{"2000002m202m2000002m200028omo?omo?o?o?om200000002m2000000000002$2000002?200000002000000000000000202"},
 	{"200000koj0koj00000koj00051+o+1h1h1h1h1+o+1n1n1n1+o+1n1n1n1n1n1+o+14000ko+1n1n1n1j0000aaaaaaa0000202"},
-	{"2000002?202?2000002m20000020200000000020o0o0o0o0o0o0o0o0o0o0o0o0o8200020o0o0o0o8oe00a0000000a000202"},
+	{"2000002?202?2000002m2000002m20000000002?o8Gmo?o?o?omo8omomo?o?omo820002?omomo$o8oe00a0000000a000202"},
 	{"200000ko+1+o+1n1n1+o+1n1n1+o+1n1n1n14051+o+1h1h1h1h1+o+1h1h1h1h1h16000ko+1h1h1h1j00a000000000a00202"},
-	{"2000002momo?omomomo$o0o0o0o0o0o0o0o720002b20000000002020000000000000002020000000200a0aa000aa0a00202"},
-	{"200000ko+1h1h1h1h1h1h1h1h1h1+o+1h1h16000ko+1n1n1n140516031400000000000koj0000000200a0aa000aa0a00202"},
-	{"2000002m2000000000000000000020200000000020o0o0o0o0200000282000000000002020000000200a000000000a00202"},
-	{"200000koj0000000000000000000ko+1n1n1n1n1+o+1h1h1+oj00000koj000000031n1+o+1n1n1n1j000aaaaaaaaa000202"},
-	{"2000002m2000000000000000000020o0o0o0o0o0o020000020200000272000000020o0o0o0o0o0o8oe000a0a0a0a0000202"},
-	{"200031+o+1n1n1n1n1n1n1n1n1n1+o+1h1h1+o+1h1600000ko+1n1n1+o+1n1n1n1+o+1h1h1h1h1h1j0000a0a0a0a0000202"},
-	{"200027o8o0o0o0o0o0o0o0o0o0o0o020000028200000000020o0o0o0o0o0o0o0o0o020000000000020000aaaaaaa0000202"},
+	{"2000002momo?omomomo$o?o?omo?o?omomo720002b20000000002720000000000000002m20000000200a0aa000aa0a00202"},
+	{"200000ko+o+1h1h1h1+1+1h1h1h1+o+1h1h16000ko+1n1n1n14051603140000031n140koj0000000200a0aa000aa0a00202"},
+	{"2000002mo82000000028200000002?200000000028Gmo?omom200000282000002mo8202m20000000200a000000000a00202"},
+	{"200000ko+1600000005160314000ko+1n1n1n1n1+o+1h1h1+oj00000koj0000051+o+1+o+1n1n1n1j000aaaaaaaaa000202"},
+	{"2000002m200000000000002820002momo?omo?o?om2000002?20000027200000002momo?omomo$o8oe000a0a0a0a0000202"},
+	{"200031+o+1n1n1n1n1n1n1non1n1+o+1h1h1+o+1h1600000ko+1n1n1+o+1n1n1n1+o+1h1h1h1h1h1j0000a0a0a0a0000202"},
+	{"200027o8omo?omomomo?omo?omomom20000028200000000028omomo?o?o?omo$omo?20000000000020000aaaaaaa0000202"},
 	{"200051h1h1h1h1h1h1h1h1h1h1h1h160000051600000000051h1h1h1h1h1h1h1h1h16000000000002000000000000000202"},
 	{"200000000000000000000000000000000000000000000000000000000000000000000000000000005111111111111111602"},
-	{"200000000000000000000000000000000000000000000000000000000000000000SQ0000000000000000000000000000002"},
+	{"200000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000002"},
 	{"511111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111116"}
 	
 
 };
 
+char Playermap[20][100] = {
+    {"311111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111114"},
+    {"200000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000002"},
+    {"200000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000002"},
+    {"200000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000002"},
+    {"200000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000002"},
+    {"200000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000002"},
+    {"200000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000002"},
+    {"200000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000002"},
+    {"200000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000002"},
+    {"200000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000002"},
+    {"200000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000002"},
+    {"200000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000002"},
+    {"200000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000002"},
+    {"200000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000002"},
+    {"200000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000002"},
+    {"200000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000002"},
+    {"200000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000002"},
+    {"200000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000002"},
+    {"200000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000002"},
+    {"511111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111116"}
+
+
+};
+
 int PlayerDontMove(int PlayerLocatition)
 {
-    if (PlayerLocatition == '1' || PlayerLocatition == '2' || PlayerLocatition == '3' || PlayerLocatition == '4' || PlayerLocatition == '5' || PlayerLocatition == '6' || PlayerLocatition == 'k' || PlayerLocatition == 'j' || PlayerLocatition == 'h' || PlayerLocatition == 'n' || PlayerLocatition == '+')
+    if (PlayerLocatition == '1' || PlayerLocatition == '2' || PlayerLocatition == '3' || PlayerLocatition == '4' || PlayerLocatition == '5' || PlayerLocatition == '6' || PlayerLocatition == 'k' || PlayerLocatition == 'j' || PlayerLocatition == 'h' || PlayerLocatition == 'n' || PlayerLocatition == '+'|| PlayerLocatition=='G')
     {
         return 0;
     }
@@ -45,152 +71,220 @@ int PlayerDontMove(int PlayerLocatition)
 
 bool IsOnEventTile = false;
 
+
+//중간보스 처치시 열리는 문 G -> o
+void OpenMiddleBossDoor()
+{
+    for (int y = 0; y < 20; y++)
+    {
+        for (int x = 0; x < 100; x++)
+        {
+            if (map[y][x] == 'G')
+            {
+                map[y][x] = 'o';
+                Playermap[y][x] = 'o';
+            }
+        }
+    }
+}
+
 void DrawMap(int& h, int& w, int& event)
 {
+    PlayerEnableViewMap();
+
     for (h = 0; h < 20; h++)
     {
         for (w = 0; w < 100; w++)
         {
             char temp = map[h][w];
-            if (temp == '1')
+            char PlyarTemp = Playermap[h][w];
+            if (temp == PlyarTemp)
             {
-                printf("─");
-            }
-            else if (temp == '2')
-            {
-                printf("│");
-            }
-            else if (temp == '3')
-            {
-                printf("┌");
-            }
-            else if (temp == '4')
-            {
-                printf("┐");
-            }
-            else if (temp == '5')
-            {
-                printf("└");
-            }
-            else if (temp == '6')
-            {
-                printf("┘");
-            }
-            else if (temp == 'k')
-            {
-                printf("├");
-            }
-            else if (temp == 'j')
-            {
-                printf("┤");
-            }
-            else if (temp == 'h')
-            {
-                printf("┴");
-            }
-            else if (temp == 'n')
-            {
-                printf("┬");
-            }
-            else if (temp == '+')
-            {
-                printf("┼");
-            }
-            else if (temp == 'a')   //보스방 표시용
-            {
-                printf("■");
-            }
-            else if (temp == 'e')    //보스방 입구 표시용
-            {
-                printf("!");
-                if (h == GPlayer.PlayerY && w == GPlayer.PlayerX)
+                if (temp == '1')
                 {
-                    event = 8;          //최종보스 조우 조건
-                    GPlayer.Bossif++;
+                    printf("─");
                 }
-            }
-            else if (temp == 'b')   //중간보스
-            {
-                printf("!");
-                if (h == GPlayer.PlayerY && w == GPlayer.PlayerX)
+                else if (temp == '2')
                 {
-                    event = 7;          //중간보스 조우 조건
-                    GPlayer.Bossif++;
-                    map[h][w] = '0';
+                    printf("│");
                 }
-            }
-            else if (temp == '7')   //보물상자
-            {
-                printf("θ");
-                if (h == GPlayer.PlayerY && w == GPlayer.PlayerX)
+                else if (temp == '3')
                 {
-                    event = 5;          //보물상자 조우 조건
-                    map[h][w] = 'c';
+                    printf("┌");
                 }
-            }
-            else if (temp == 'c')   //열린보물상자
-            {
-                printf("Ф");
-            }
-            else if (temp == '8')   //회복샘
-            {
-                printf("∀");
+                else if (temp == '4')
+                {
+                    printf("┐");
+                }
+                else if (temp == '5')
+                {
+                    printf("└");
+                }
+                else if (temp == '6')
+                {
+                    printf("┘");
+                }
+                else if (temp == 'k')
+                {
+                    printf("├");
+                }
+                else if (temp == 'j')
+                {
+                    printf("┤");
+                }
+                else if (temp == 'h')
+                {
+                    printf("┴");
+                }
+                else if (temp == 'n')
+                {
+                    printf("┬");
+                }
+                else if (temp == '+')
+                {
+                    printf("┼");
+                }
+                else if (temp == 'a')   //보스방 표시용
+                {
+                    printf("■");
+                }
+                else if (temp == 'e')    //보스방 입구 표시용
+                {
+                    SetColor(4);
+                    printf("!");
+                    SetColor(7);
+                    if (h == GPlayer.PlayerY && w == GPlayer.PlayerX)
+                    {
+                        event = 8;          //최종보스 조우 조건
+                        GPlayer.Bossif++;
+                    }
+                }
+                else if (temp == 'b')   //중간보스
+                {
+                    SetColor(4);
+                    printf("!");
+                    SetColor(7);
+                    if (h == GPlayer.PlayerY && w == GPlayer.PlayerX)
+                    {
+                        event = 7;          //중간보스 조우 조건
+                        GPlayer.Bossif++;
+                        
+                        map[h][w] = '0';
+                    }
+                }
+                else if (temp == '7')   //보물상자
+                {
+                    SetColor(6);
+                    printf("θ");
+                    SetColor(7);
+                    if (h == GPlayer.PlayerY && w == GPlayer.PlayerX)
+                    {
+                        event = 5;          //보물상자 조우 조건
+                        map[h][w] = 'c';
+                    }
+                }
+                else if (temp == 'c')   //열린보물상자
+                {
+                    SetColor(6);
+                    printf("Ф");
+                    SetColor(7);
+                }
+                else if (temp == '8')   //회복샘
+                {
+                    SetColor(10);
+                    printf("∀");
+                    SetColor(7);
 
-                if (h == GPlayer.PlayerY && w == GPlayer.PlayerX && IsOnEventTile == false)
-                {
-                    event = 4;          //회복샘 조우 조건
-                    IsOnEventTile = true;
-                }
+                    if (h == GPlayer.PlayerY && w == GPlayer.PlayerX && IsOnEventTile == false)
+                    {
+                        event = 4;          //회복샘 조우 조건
+                        IsOnEventTile = true;
+                    }
 
-            }
-            else if (temp == 'm')   //확정 몬스터
-            {
-                printf("M");
-                if (h == GPlayer.PlayerY && w == GPlayer.PlayerX)
-                {
-                    event = 1;          //몬스터 조우 조건
-                    map[h][w] = '0';
                 }
-            }
-            else if (temp == '?')   //랜덤이벤트(플레이어 강화 OR 약화 OR 돈획득 OR 몬스터 조우)
-            {
-                printf("?");
-                if (h == GPlayer.PlayerY && w == GPlayer.PlayerX)
+                else if (temp == 'm')   //확정 몬스터
                 {
-                    event = 2;          //랜덤이벤트 조우 조건
-                    map[h][w] = '0';
+                    printf("M");
+                    if (h == GPlayer.PlayerY && w == GPlayer.PlayerX)
+                    {
+                        event = 1;          //몬스터 조우 조건
+                        map[h][w] = '0';
+                    }
                 }
-            }
-            else if (temp == '$')   //상점
-            {
-                SetColor(6);
-                printf("$");
-                SetColor(7);
-                if (h == GPlayer.PlayerY && w == GPlayer.PlayerX)
+                else if (temp == '?')   //랜덤이벤트(플레이어 강화 OR 약화 OR 돈획득 OR 몬스터 조우)
                 {
-                    event = 3;          //상점이벤트 조우 조건
-                    map[h][w] = '0';
+                    printf("?");
+                    if (h == GPlayer.PlayerY && w == GPlayer.PlayerX)
+                    {
+                        event = 2;          //랜덤이벤트 조우 조건
+                        map[h][w] = '0';
+                    }
                 }
+                else if (temp == '$')   //상점
+                {
+                    SetColor(14);
+                    printf("$");
+                    SetColor(7);
+                    if (h == GPlayer.PlayerY && w == GPlayer.PlayerX)
+                    {
+                        event = 3;          //상점이벤트 조우 조건
+                        map[h][w] = '0';
+                    }
 
+                }
+                else if (temp == 'G')//중간보스 처치시 열리는 문
+                {
+                    if (GPlayer.HaveKey == 0)
+                    {
+                        SetColor(12);
+                        printf("│");
+                        SetColor(7);
+                    }
+                    else
+                    {
+						printf(" ");
+                    }
+                }
+                else if (temp == 'Q')
+                {
+                    printf("B");
+                }
+                else if (h == GPlayer.PlayerY && w == GPlayer.PlayerX)
+                {
+                    printf("P");
+                }
+                else if (temp == '0' || temp == 'o')
+                {
+                    printf(" ");
+                }
             }
-            else if (temp == 'S')
-            {
-                printf("@");
-            }
-            else if (temp == 'Q')
-            {
-                printf("B");
-            }
-            else if (h == GPlayer.PlayerY && w == GPlayer.PlayerX)
-            {
-                printf("P");
-            }
-            else if (temp == '0' || temp == 'o')
+            else
             {
                 printf(" ");
             }
+            
         }
         printf("\n");
+    }
+}
+
+void PlayerEnableViewMap()
+{
+    const int PlayerView = 2;
+    int PlayerMaxViewX = GPlayer.PlayerX + PlayerView;
+    int PlayerMinViewX = GPlayer.PlayerX - PlayerView;
+    int PlayerMaxViewY = GPlayer.PlayerY + PlayerView;
+    int PlayerMinViewY = GPlayer.PlayerY - PlayerView;
+    for (int i = PlayerMinViewY; i <= PlayerMaxViewY; i++)
+    {
+        for (int j = PlayerMinViewX; j <= PlayerMaxViewX; j++)
+        {
+            char PlayerViewTemp = map[i][j];
+            if (Playermap[i][j] != map[i][j])
+            {
+                Playermap[i][j] = map[i][j];
+            }
+        }
     }
 }
 
@@ -207,6 +301,10 @@ int MapUI() {
     if (GPlayer.Health > GPlayer.MaxHealth)
     {
 		GPlayer.Health = GPlayer.MaxHealth;
+    }
+    if (GPlayer.Mana > GPlayer.MaxMana)
+    {
+        GPlayer.Mana = GPlayer.MaxMana;
     }
 
 
@@ -261,7 +359,7 @@ int MapUI() {
 		return 3;
     }
 
-    //플레이어 이동
+    //플레이어 조작
     Selectkey = _getch();
     while (true)
     {

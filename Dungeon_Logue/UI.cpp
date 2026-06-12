@@ -1,11 +1,17 @@
 #include "Main.h"
+#include "UI.h"
+
 
 
 void PrintPlayerState(int Health, int MaxHealth,int Mana, int MaxMana, int AttackPowerMin, int AttackPowerMax, int Defense, int Money)
 {
-    printf("┌─────────────────────────────────────────────────────────────────────────────────────────────────┬──────────────┬───────────────┐\n");
-    printf("│  HP : [%4d] / [%4d]      MP : [%3d] / [%3d]      Max Damage : [%3d ~ %3d]      Defense : [%2d] │ Luck : [%3d] │ Money : %5d │\n", Health, MaxHealth, Mana, MaxMana, AttackPowerMin, AttackPowerMax, Defense,GPlayer.Luck, Money);
-    printf("└─────────────────────────────────────────────────────────────────────────────────────────────────┴──────────────┴───────────────┘\n");
+    printf("┌─────────────────────────────────────────────────────────────────────────────────────────────────┐\n");
+    printf("│  HP : [%4d] / [%4d]      MP : [%3d] / [%3d]      Max Damage : [%3d ~ %3d]      Defense : [%2d] │\n", Health, MaxHealth, Mana, MaxMana, AttackPowerMin, AttackPowerMax, Defense);
+    printf("├───────────────┬─────────────────────────────────────────────────────────────────┬───────────────┤\n");
+    printf("│  Luck : [%3d] │     ", GPlayer.Luck);
+    PrintPlayerEXPbar(GPlayer.Experience,GPlayer.ExperienceToNextLevel,GPlayer.Level);
+    printf("  │ Money : %5d │\n", Money);
+    printf("└───────────────┘                                                                 └───────────────┘\n");
 }
 
 void PrintPlayerBattleState(int Health, int MaxHealth, int Mana, int MaxMana, int AttackPowerMin, int AttackPowerMax, int Defense, int Critical)
@@ -116,4 +122,60 @@ bool PrintPlayerStatus(int& Statusselected)
         return false;
     }
     return true;
+}
+
+
+void PrintMonsterHealthBar(int current, int maxHP, std::string Name)
+{
+    if (maxHP <= 0) maxHP = 1;
+    int barWidth = 30;  // 바 길이 (조정 가능)
+    float percent = (float)current / maxHP;
+    int filled = (int)(percent * barWidth);
+
+    if (GPlayer.Bossif >= 1)
+    {
+        SetColor(4);
+    }
+    else
+    {
+        SetColor(6);
+    }
+    printf("%s HP: ", Name.c_str());
+    printf("[");
+    for (int i = 0; i < barWidth; i++)
+    {
+        if (i < filled)
+            printf("█");      // 채워진 부분
+        else
+            printf("░");      // 빈 부분
+    }
+    printf("] %d / %d  (%.0f%%)", current, maxHP, percent * 100);
+    SetColor(7);
+
+    if (percent <= 0.3f) SetColor(12);      // 빨강
+    else if (percent <= 0.6f) SetColor(14); // 노랑
+    printf("\n");
+    SetColor(7);
+}
+
+void PrintPlayerEXPbar(int currentEXP, int maxEXP, int Level)
+{
+    if (maxEXP <= 0) maxEXP = 1;
+    int barWidth = 30;  // 바 길이 (조정 가능)
+    float percent = (float)currentEXP / maxEXP;
+    int filled = (int)(percent * barWidth);
+
+    printf("LV.%2d: ", Level);
+    SetColor(10);
+    printf("[");
+    for (int i = 0; i < barWidth; i++)
+    {
+        if (i < filled)
+            printf("█");      // 채워진 부분
+        else
+            printf("░");      // 빈 부분
+    }
+    printf("] %4d / %4d  (%2.f%%)", currentEXP, maxEXP, percent * 100);
+
+    SetColor(7);
 }
