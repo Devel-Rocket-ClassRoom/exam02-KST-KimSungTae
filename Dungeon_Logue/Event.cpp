@@ -139,14 +139,14 @@ void Monster_Event_Encounter(int InLevel,int Bossif)
 		}
 
 		printf("===================== 턴 %d =====================\n", BattleTurn);
-		printf("플레이어 HP: %d / %d\t<적의 다음 행동>\n", GPlayer.Health, GPlayer.MaxHealth);
+		printf("플레이어 HP: %4d / %4d\t<적의 다음 행동>\n", GPlayer.Health, GPlayer.MaxHealth);
 		if (Bossif == 0)
 		{
-			printf("적       HP: %d / %d\t\t%s\n", Monster.Health, Monster.MaxHealth, IsEnemyCritical ? " 치명적인 일격" : "   일반 공격");
+			printf("적       HP: %4d / %4d\t%s\n", Monster.Health, Monster.MaxHealth, IsEnemyCritical ? " 치명적인 일격" : "   일반 공격");
 		}
 		else
 		{
-			printf("적       HP: %d / %d\t\t\t?\n", Monster.Health, Monster.MaxHealth);
+			printf("적       HP: %4d / %4d\t\t?\n", Monster.Health, Monster.MaxHealth);
 		}
 		printf("================================================\n");
 
@@ -192,14 +192,14 @@ void Monster_Event_Encounter(int InLevel,int Bossif)
 				}
 
 				printf("===================== 턴 %d =====================\n", BattleTurn);
-				printf("플레이어 HP: %d / %d\t<적의 다음 행동>\n", GPlayer.Health, GPlayer.MaxHealth);
+				printf("플레이어 HP: %4d / %4d\t<적의 다음 행동>\n", GPlayer.Health, GPlayer.MaxHealth);
 				if (Bossif == 0)
 				{
-					printf("적       HP: %d / %d\t\t%s\n", Monster.Health, Monster.MaxHealth, IsEnemyCritical ? " 치명적인 일격" : "   일반 공격");
+					printf("적       HP: %4d / %4d\t%s\n", Monster.Health, Monster.MaxHealth, IsEnemyCritical ? " 치명적인 일격" : "   일반 공격");
 				}
 				else
 				{
-					printf("적       HP: %d / %d\t\t\t?\n", Monster.Health, Monster.MaxHealth);
+					printf("적       HP: %4d / %4d\t\t?\n", Monster.Health, Monster.MaxHealth);
 				}
 				printf("================================================\n");
 			}
@@ -501,7 +501,7 @@ void Random_Event_Encounter()
 		while (true)
 		{
 			system("cls");
-			PrintMonster(0, 0, 0, 0, "Monster.Name", -1);
+			PrintMonster(0, 0, 0, 0, "Monster.Name", -2);
 			printf("떠돌이 몬스터 발견!!\n");
 			printf("처치 하시겠습니까?(선택에 따라 스테이터스 포인트를 드립니다.)\n");
 			// 메뉴 표시
