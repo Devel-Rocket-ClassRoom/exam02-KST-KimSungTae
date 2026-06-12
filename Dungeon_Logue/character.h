@@ -9,7 +9,6 @@ using namespace std;
 //void PrintGob();
 void PrintNPC();
 void PrintMonster(int Level, int CurrentHP, int MaxHP, int Bossif, std::string Name, int RandomMonster);
-void PrintMonsterHealthBar(int current, int maxHP, std::string Name);
 void PrintChest();
 void PrintClear();
 void Player_LevelUp(int Reward);
