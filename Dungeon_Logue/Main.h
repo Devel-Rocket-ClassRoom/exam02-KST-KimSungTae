@@ -9,3 +9,5 @@
 using namespace std;
 
 extern struct Player GPlayer;
+
+void PrintHelp();

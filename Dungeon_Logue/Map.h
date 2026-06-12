@@ -7,5 +7,4 @@ void PlayerEnableViewMap();
 
 int MapUI();
 int PlayerDontMove(int PlayerLocatition);
-void SetColor(int Color);
 void OpenMiddleBossDoor();

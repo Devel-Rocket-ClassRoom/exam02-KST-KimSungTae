@@ -3,3 +3,4 @@
 
 void initScreen();
 int MenuDraw(int MenuSelect);
+void PrintHelp();

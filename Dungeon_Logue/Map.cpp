@@ -2,13 +2,10 @@
 #include "UI.h"
 #include "Event.h"
 #include "Character.h"
+#include "Utill.h"
+#include "Battle.h"
 
 
-
-void SetColor(int Color)
-{
-    SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), Color);
-}
 
 char map[20][100] = {
 	{"311111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111114"},

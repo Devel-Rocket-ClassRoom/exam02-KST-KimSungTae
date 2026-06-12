@@ -1,7 +1,6 @@
 #pragma once
 
 
-void Monster_Event_Encounter(int InLevel, int Bossif);
 void Random_Event_Encounter();
 int Shop_Event_Encounter();
 int  Healspot_Event_Encounter();
