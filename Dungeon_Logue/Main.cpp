@@ -31,14 +31,14 @@ int main()
 
 	GPlayer.PlayerX = 3;
 	GPlayer.PlayerY = 3;
-    GPlayer.MaxHealth = 3000;
+    GPlayer.MaxHealth = 300;
     GPlayer.Health = GPlayer.MaxHealth;
     GPlayer.MaxMana = 50;
 	GPlayer.Mana = GPlayer.MaxMana;
-    GPlayer.AttackPowerMin = 15;
-    GPlayer.AttackPowerMax = 115;
+    GPlayer.AttackPowerMin = 5;
+    GPlayer.AttackPowerMax = 15;
     GPlayer.Defense = 5;
-    GPlayer.Money = 1000;
+    GPlayer.Money = 0;
 	GPlayer.CriticalChance = 10;
 	GPlayer.Luck = 0;
 	GPlayer.Skill1 = 0;
@@ -47,7 +47,7 @@ int main()
 	GPlayer.MonsterLevel = -1;
     GPlayer.Level = 1;
     GPlayer.Experience = 0;
-    GPlayer.ExperienceToNextLevel = 1;
+    GPlayer.ExperienceToNextLevel = 100;
     GPlayer.StatPoints = 0;
 	GPlayer.Bossif = 0;
     GPlayer.HaveKey = 0;
