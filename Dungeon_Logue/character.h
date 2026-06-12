@@ -1,9 +1,6 @@
 #pragma once
-#include "main.h"
+#include <string>
 #include "Utill.h"
-#include "Map.h"
-#include "Event.h"
-using namespace std;
 
 
 void Player_LevelUp(int Reward);

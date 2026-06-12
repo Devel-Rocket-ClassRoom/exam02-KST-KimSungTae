@@ -4,6 +4,7 @@
 #include "Character.h"
 #include "Utill.h"
 #include "Battle.h"
+#include "Map.h"
 
 
 

@@ -701,7 +701,7 @@ void PrintMonster(int Level, int CurrentHP, int MaxHP, int Bossif, std::string N
 {
     if (Bossif == 0)
     {
-        if (Level == 0 || RandomMonster == 0)
+        if (RandomMonster == 0 && (Level == 0 || Level >= 6))
         {
             int size = sizeof(Slimeart) / sizeof(Slimeart[0]);
             for (int i = 0; i < size; i++)
@@ -709,7 +709,7 @@ void PrintMonster(int Level, int CurrentHP, int MaxHP, int Bossif, std::string N
                 printf("%s\n", Slimeart[i]);
             }
         }
-        else if (Level == 1 || RandomMonster == 1)
+        else if (RandomMonster == 1 && (Level == 1 || Level >= 6))
         {
             int size = sizeof(GobArt) / sizeof(GobArt[0]);
             for (int i = 0; i < size; i++)
@@ -717,7 +717,7 @@ void PrintMonster(int Level, int CurrentHP, int MaxHP, int Bossif, std::string N
                 printf("%s\n", GobArt[i]);
             }
         }
-        else if (Level == 2 || RandomMonster == 2)
+        else if (RandomMonster == 2 && (Level == 2 || Level >= 6))
         {
             int size = sizeof(OrcArt) / sizeof(OrcArt[0]);
             for (int i = 0; i < size; i++)
@@ -725,7 +725,7 @@ void PrintMonster(int Level, int CurrentHP, int MaxHP, int Bossif, std::string N
                 printf("%s\n", OrcArt[i]);
             }
         }
-        else if (Level == 3 || RandomMonster == 3)
+        else if (RandomMonster == 3 && (Level == 3 || Level >= 6))
         {
             int size = sizeof(SkeletonArt) / sizeof(SkeletonArt[0]);
             for (int i = 0; i < size; i++)
@@ -733,7 +733,7 @@ void PrintMonster(int Level, int CurrentHP, int MaxHP, int Bossif, std::string N
                 printf("%s\n", SkeletonArt[i]);
             }
         }
-        else if (Level == 4 || RandomMonster == 4)
+        else if (RandomMonster == 4 && (Level == 4 || Level >= 6))
         {
             int size = sizeof(OgreArt) / sizeof(OgreArt[0]);
             for (int i = 0; i < size; i++)
@@ -741,7 +741,7 @@ void PrintMonster(int Level, int CurrentHP, int MaxHP, int Bossif, std::string N
                 printf("%s\n", OgreArt[i]);
             }
         }
-        else if (Level == 5 || RandomMonster == 5)
+        else if (RandomMonster == 5 && (Level == 5 || Level >= 6))
         {
             int size = sizeof(TrollArt) / sizeof(TrollArt[0]);
             for (int i = 0; i < size; i++)

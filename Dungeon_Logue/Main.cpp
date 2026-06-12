@@ -14,6 +14,7 @@ Player GPlayer;
 
 int main()
 {
+    srand((unsigned)time(0));
     // wt.exe로 실행된 게 아니면 → wt 최대화로 재실행 후 기존 창 숨기기/종료
     if (GetEnvironmentVariableA("WT_SESSION", NULL, 0) == 0) {
         char exePath[MAX_PATH];

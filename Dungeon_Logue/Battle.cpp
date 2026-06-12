@@ -18,11 +18,10 @@ void NowStatus(int PlayerHP, int EnemyHP)
 //1		몬스터
 void Monster_Event_Encounter(int InLevel, int Bossif)
 {
-	srand(time(0));
 	int randomMonster = GetRandomRange(0, 5);
 	char Selectkey;
 	int Level = InLevel / 3;
-	if (Level < 0)
+	if (Level <= 0)
 	{
 		Level = 0;
 	}
@@ -35,65 +34,77 @@ void Monster_Event_Encounter(int InLevel, int Bossif)
 	{
 		if (Level == 0)
 		{
-			Monster = MonsterDefault("오염수 슬라임", 0);
-			PrintMonster(Level, Monster.Health, Monster.MaxHealth, 0, Monster.Name, -1);
+			Monster = MonsterDefault("오염수 슬라임", Level);
+			PrintMonster(Level, Monster.Health, Monster.MaxHealth, 0, Monster.Name, 0);
+			randomMonster = 0;
 		}
 		else if (Level == 1)
 		{
 			Monster = MonsterDefault("고블린 약탈자", Level);
-			PrintMonster(Level, Monster.Health, Monster.MaxHealth, 0, Monster.Name, -1);
+			PrintMonster(Level, Monster.Health, Monster.MaxHealth, 0, Monster.Name, 1);
+			randomMonster = 1;
 		}
 		else if (Level == 2)
 		{
 			Monster = MonsterDefault("하이오크", Level);
-			PrintMonster(Level, Monster.Health, Monster.MaxHealth, 0, Monster.Name, -1);
+			PrintMonster(Level, Monster.Health, Monster.MaxHealth, 0, Monster.Name, 2);
+			randomMonster = 2;
 		}
 		else if (Level == 3)
 		{
 			Monster = MonsterDefault("스켈레톤 나이트", Level);
-			PrintMonster(Level, Monster.Health, Monster.MaxHealth, 0, Monster.Name, -1);
+			PrintMonster(Level, Monster.Health, Monster.MaxHealth, 0, Monster.Name, 3);
+			randomMonster = 3;
 		}
 		else if (Level == 4)
 		{
 			Monster = MonsterDefault("트윈 헤드 오우거", Level);
-			PrintMonster(Level, Monster.Health, Monster.MaxHealth, 0, Monster.Name, -1);
+			PrintMonster(Level, Monster.Health, Monster.MaxHealth, 0, Monster.Name, 4);
+			randomMonster = 4;
 		}
 		else if (Level == 5)
 		{
 			Monster = MonsterDefault("트롤", Level);
-			PrintMonster(Level, Monster.Health, Monster.MaxHealth, 0, Monster.Name, -1);
+			PrintMonster(Level, Monster.Health, Monster.MaxHealth, 0, Monster.Name, 5);
+			randomMonster = 5;
 		}
 		else if (Level >= 6)
 		{
 			if (randomMonster == 0)
 			{
 				Monster = MonsterDefault("오염수 슬라임", Level);
-				PrintMonster(Level, Monster.Health, Monster.MaxHealth, 0, Monster.Name, randomMonster);
+				PrintMonster(Level, Monster.Health, Monster.MaxHealth, 0, Monster.Name, 0);
+				randomMonster = 0;
 			}
 			else if (randomMonster == 1)
 			{
 				Monster = MonsterDefault("고블린 약탈자", Level);
-				PrintMonster(Level, Monster.Health, Monster.MaxHealth, 0, Monster.Name, randomMonster);
+				PrintMonster(Level, Monster.Health, Monster.MaxHealth, 0, Monster.Name, 1);
+				randomMonster = 1;
 			}
 			else if (randomMonster == 2)
 			{
 				Monster = MonsterDefault("하이오크", Level);
-				PrintMonster(Level, Monster.Health, Monster.MaxHealth, 0, Monster.Name, randomMonster);
+				PrintMonster(Level, Monster.Health, Monster.MaxHealth, 0, Monster.Name, 2);
+				randomMonster = 2;
 			}
 			else if (randomMonster == 3)
 			{
 				Monster = MonsterDefault("스켈레톤 나이트", Level);
-				PrintMonster(Level, Monster.Health, Monster.MaxHealth, 0, Monster.Name, randomMonster);
+				PrintMonster(Level, Monster.Health, Monster.MaxHealth, 0, Monster.Name, 3);
+				randomMonster = 3;
 			}
 			else if (randomMonster == 4)
 			{
 				Monster = MonsterDefault("트윈 헤드 오우거", Level);
-				PrintMonster(Level, Monster.Health, Monster.MaxHealth, 0, Monster.Name, randomMonster);
+				PrintMonster(Level, Monster.Health, Monster.MaxHealth, 0, Monster.Name, 4);
+				randomMonster = 4;
 			}
 			else if (randomMonster == 5)
 			{
 				Monster = MonsterDefault("트롤", Level);
-				PrintMonster(Level, Monster.Health, Monster.MaxHealth, 0, Monster.Name, randomMonster);
+				PrintMonster(Level, Monster.Health, Monster.MaxHealth, 0, Monster.Name, 5);
+				randomMonster = 5;
 			}
 		}
 	}

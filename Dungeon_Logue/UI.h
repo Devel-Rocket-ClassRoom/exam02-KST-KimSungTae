@@ -5,7 +5,6 @@
 #include <conio.h>
 #include <windows.h>
 //#include <random>
-using namespace std;
 
 void PrintPlayerState(int Health, int MaxHealth, int Mana, int MaxMana, int AttackPowerMin, int AttackPowerMax, int Defense, int Money);
 void drawCharMenu();

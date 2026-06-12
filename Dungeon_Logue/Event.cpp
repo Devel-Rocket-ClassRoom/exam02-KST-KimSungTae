@@ -12,7 +12,6 @@
 //2		랜덤인카운트
 void Random_Event_Encounter()
 {
-	srand(time(0));
 	system("cls");
 	printf("랜덤 이벤트를 인카운트 했습니다!\n");
 	Sleep(_getch());
@@ -795,7 +794,6 @@ int  Healspot_RandomEvent_Encounter()
 //5		보물상자
 void Chest_Event_Encounter()
 {
-	srand(time(0));
 	system("cls");
 	PrintChest();
 	printf("보물 이벤트를 인카운트 했습니다!\n");
@@ -852,7 +850,6 @@ void Chest_Event_Encounter()
 //6 이동시 랜덤 인카운트
 int Random_Encounter(int PlayerLocatition)
 {
-	srand(time(0));
 	int EncounterNumber = rand() % 3;
 	if (PlayerLocatition == '0')
 	{
@@ -880,7 +877,6 @@ int Random_Encounter(int PlayerLocatition)
 //7 중간보스 인카운트
 void Middle_Boss_Encounter()
 {
-	srand(time(0));
 	Monster_Event_Encounter(GPlayer.MonsterLevel + 6, GPlayer.Bossif);
 	GPlayer.HaveKey = 1;
 	OpenMiddleBossDoor();
@@ -889,7 +885,6 @@ void Middle_Boss_Encounter()
 //8 최종보스 인카운트
 void Boss_Encounter()
 {
-	srand(time(0));
 	Monster_Event_Encounter(GPlayer.MonsterLevel + 12, GPlayer.Bossif);
 }
 
