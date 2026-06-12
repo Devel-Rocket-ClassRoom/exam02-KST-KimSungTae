@@ -11,15 +11,14 @@ struct Player
 {
     int PlayerX = 3;
     int PlayerY = 3;
-    //std::string Name = "고블린";
-    int MaxHealth = 100;
-    int Health = 100;
+    int MaxHealth = 300;
+    int Health = MaxHealth;
     int AttackPowerMin = 5;
     int AttackPowerMax = 15;
     int CriticalChance = 10;
     int Luck = 0;
-    int MaxMana = 100;
-    int Mana = 100;
+    int MaxMana = 50;
+    int Mana = MaxMana;
     int Defense = 5;
     int Money = 0;
     int MonsterLevel = -1;
