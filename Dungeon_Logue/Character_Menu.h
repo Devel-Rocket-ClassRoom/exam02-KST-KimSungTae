@@ -11,9 +11,4 @@ void PrintPlayerState(int Health, int MaxHealth, int Mana, int MaxMana, int Atta
 void drawCharMenu();
 void PrintPlayerBattleState(int Health, int MaxHealth, int Mana, int MaxMana, int AttackPowerMin, int AttackPowerMax, int Defense, int Critical);
 void drawCharMenuWithSelection(int selected);
-
-//if (Selectkey == '3')
-//{
-//    return 3;
-//    break;
-//}
+bool PrintPlayerStatus(int& Statusselected);

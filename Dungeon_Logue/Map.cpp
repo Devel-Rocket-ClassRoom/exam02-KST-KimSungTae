@@ -215,7 +215,7 @@ int MapUI() {
 
     int PlayerLocatition = map[GPlayer.PlayerY][GPlayer.PlayerX];
     int event = -1;
-	int RandomEventChance = GetRandomRange(1, 100);
+    int RandomEventChance = -2;
     
 
     
@@ -261,25 +261,18 @@ int MapUI() {
 		return 3;
     }
 
-
-    if(RandomEventChance <= 3 && event == -1) //맵 이동시 3% 확률로 랜덤 이벤트 발생
-    {
-        Random_Encounter(PlayerLocatition);
-        return 0;
-	}
-
     //플레이어 이동
     Selectkey = _getch();
-
     while (true)
     {
         if (Selectkey == 'x' || Selectkey == 'X')
         {
             // ==================== 캐릭터 메뉴 모드 ====================
-            int selected = 0;
-            bool inMenu = true;
+            int Selected = 0;
+            bool InMenu = true;
 
-            while (inMenu)
+            
+            while (InMenu)
             {
                 system("cls");  // 메뉴 모드에서는 전체 화면을 새로 그려서 겹침 방지
 
@@ -289,37 +282,45 @@ int MapUI() {
                 DrawMap(h, w, event);
 
                 printf("\n");
-                drawCharMenuWithSelection(selected);
+                drawCharMenuWithSelection(Selected);
 
                 Selectkey = _getch();
 
                 if (Selectkey == 72)        // ↑
                 {
-                    selected = (selected + 1) % 2;
+                    Selected = (Selected + 1) % 2;
                 }
                 else if (Selectkey == 80)   // ↓
                 {
-                    selected = (selected + 1) % 2;
+                    Selected = (Selected + 1) % 2;
                 }
                 else if (Selectkey == 'z'|| Selectkey == 'Z')//선택
                 {
                     system("cls");
-                    if (selected == 0)
+                    if (Selected == 0)
                     {
-                        // TODO: 인벤토리 함수 호출
-                        printf("인벤토리 열림 (구현 예정)\n");
+                        bool InStatusMenu = true;
+                        int Statusselected = 0;
+                        while (InStatusMenu)
+                        {
+                            
+                            InStatusMenu = PrintPlayerStatus(Statusselected);
+
+                        }
+                        InStatusMenu = true; //스테이터스 메뉴에서 나와도 다시 캐릭터 메뉴로 돌아가기 위해 true로 초기화
                     }
-                    else if (selected == 1)
+                    else if (Selected == 1)
                     {
                         Selectkey = '3';
                         return 3;
                     }
-					Sleep(_getch());
+					
+					
 
                 }
                 else if (Selectkey == 'x' || Selectkey == 'X' || Selectkey == 27) // ESC 또는 x 다시 누르면 종료
                 {
-                    inMenu = false;
+                    InMenu = false;
                 }
             }
 
@@ -394,6 +395,18 @@ int MapUI() {
             Selectkey = _getch();
         }
     }
+
+
+    if (event == -1)   //이동한 칸에 이벤트가 없을 때, 3% 확률로 랜덤 이벤트 발생
+    {
+        RandomEventChance = GetRandomRange(1, 100);
+        if (RandomEventChance <= 3 && event == -1) //맵 이동시 3% 확률로 랜덤 이벤트 발생
+        {
+            Random_Encounter(PlayerLocatition);
+            return 0;
+        }
+    }
+
 
     
 }

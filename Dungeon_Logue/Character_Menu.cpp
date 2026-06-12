@@ -28,3 +28,92 @@ void drawCharMenu()
 {
     drawCharMenuWithSelection(-1);  // 선택 없음
 }
+
+bool PrintPlayerStatus(int& Statusselected)
+{
+    system("cls");
+    PrintPlayerState(GPlayer.Health, GPlayer.MaxHealth, GPlayer.Mana, GPlayer.MaxMana,
+        GPlayer.AttackPowerMin, GPlayer.AttackPowerMax, GPlayer.Defense, GPlayer.Money);
+    printf("\n");
+    printf("스탯 포인트가 %d개 남았습니다.\n", GPlayer.StatPoints);
+    printf("1. 현재, 최대 체력 +10 (필요 스탯 포인트: 1) %s\n\n", Statusselected == 0 ? "  <" : "");
+    printf("2. 최소, 최대 공격력 +1 (필요 스탯 포인트: 1) %s\n\n", Statusselected == 1 ? "  <" : "");
+    printf("3. 방어력 +1 (필요 스탯 포인트: 1) %s\n\n", Statusselected == 2 ? "  <" : "");
+    printf("4. 마나 +10 (필요 스탯 포인트: 1) %s\n\n", Statusselected == 3 ? "  <" : "");
+    printf("4. 럭 +1 (필요 스탯 포인트: 1) %s\n\n", Statusselected == 4 ? "  <" : "");
+    printf("6. 돌아가기(또는 X키) %s\n\n", Statusselected == 5 ? "  <" : "");
+
+    char StatusSelectkey = _getch();
+    if (StatusSelectkey == 72)        // ↑
+    {
+        Statusselected = (Statusselected + 5) % 6;
+    }
+    else if (StatusSelectkey == 80)   // ↓
+    {
+        Statusselected = (Statusselected + 7) % 6;
+    }
+    else if (StatusSelectkey == 'z' || StatusSelectkey == 'Z')//선택
+    {
+        if (Statusselected == 5)
+        {
+            return false; // 돌아가기 선택 시 false 반환
+        }
+
+        if (GPlayer.StatPoints > 0)
+        {
+            if (Statusselected == 0)
+            {
+                GPlayer.StatPoints -= 1; // 스탯 포인트 차감
+                GPlayer.Health += 10;
+                GPlayer.MaxHealth += 10;
+				printf("현재, 최대 체력이 10 증가했습니다!\n");
+                Sleep(_getch());
+            }
+            else if (Statusselected == 1)
+            {
+                GPlayer.StatPoints -= 1; // 스탯 포인트 차감
+                GPlayer.AttackPowerMin += 1;
+                GPlayer.AttackPowerMax += 1;
+				printf("최소, 최대 공격력이 1 증가했습니다!\n");
+                Sleep(_getch());
+            }
+            else if (Statusselected == 2)
+            {
+                GPlayer.StatPoints -= 1; // 스탯 포인트 차감
+                GPlayer.Defense += 1;
+				printf("방어력이 1 증가했습니다!\n");
+                Sleep(_getch());
+            }
+            else if (Statusselected == 3)
+            {
+                GPlayer.StatPoints -= 1; // 스탯 포인트 차감
+                GPlayer.Mana += 10;
+                GPlayer.MaxMana += 10;
+				printf("현재, 최대 마나가 10 증가했습니다!\n");
+                Sleep(_getch());
+
+            }
+            else if (Statusselected == 4)
+            {
+                GPlayer.StatPoints -= 1; // 스탯 포인트 차감
+				GPlayer.Luck += 1;
+				printf("럭이 1 증가했습니다!\n");
+                Sleep(_getch());
+            }
+
+        }
+        else
+        {
+            printf("스탯 포인트가 부족합니다!\n");
+            Sleep(_getch());
+            return true; // 스탯 포인트 부족 시 메뉴 유지
+        }
+		
+
+    }
+    else if (StatusSelectkey == 'x' || StatusSelectkey == 'X' || StatusSelectkey == 27) // ESC
+    {
+        return false;
+    }
+    return true;
+}

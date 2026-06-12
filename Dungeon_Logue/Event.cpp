@@ -439,10 +439,14 @@ void Monster_Event_Encounter(int InLevel,int Bossif)
 	{
 		GPlayer.Money += Monster.Reward;
 		printf("적을 물리쳤습니다!\n");
-		printf("%d골드를 획득 했습니다.", Monster.Reward);
-		printf("%d의 경험치를 획득했습니다.", GPlayer.Experience);
-
-		Player_LevelUp(Monster.Reward);
+		printf("%d골드를 획득 했습니다.\n", Monster.Reward);
+		printf("%d의 경험치를 획득했습니다.", (int)(Monster.Reward * 1.5));
+		GPlayer.Experience += (int)(Monster.Reward * 1.5);
+		if(GPlayer.Experience>GPlayer.ExperienceToNextLevel)
+			while (GPlayer.Experience >= GPlayer.ExperienceToNextLevel)
+			{
+				Player_LevelUp(Monster.Reward);
+			}
 		Selectkey = _getch();
 	}
 	else
