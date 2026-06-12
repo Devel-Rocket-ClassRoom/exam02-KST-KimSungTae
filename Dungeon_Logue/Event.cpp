@@ -573,14 +573,19 @@ void Random_Event_Encounter()
 
 		if (SelectAction == 0)
 		{
-			if (BenefitRisk >= (30 - GPlayer.Luck))
+			int DICEChance = 30 - GPlayer.Luck;
+			if(DICEChance<0)
+			{
+				DICEChance = 0;
+			}
+			if (BenefitRisk >= DICEChance)
 			{
 				printf("강화에 성공했습니다!\n");
 				printf("플레이어의 최대, 최소 공격력이 %d만큼 증가했습니다.\n", randomAttack);
 				GPlayer.AttackPowerMax += randomAttack;
 				GPlayer.AttackPowerMin += randomAttack;
 			}
-			else if (BenefitRisk < (30 - GPlayer.Luck))
+			else if (BenefitRisk < DICEChance)
 			{
 				printf("어이쿠 손이 미끄러졌네!\n");
 				printf("플레이어의 최대, 최소 공격력이 %d만큼 감소했습니다.\n", randomAttack);
@@ -635,13 +640,18 @@ void Random_Event_Encounter()
 
 		if (SelectAction == 0)
 		{
-			if (BenefitRisk >= (50 - GPlayer.Luck))
+			int DICEChance = 50 - GPlayer.Luck;
+			if (DICEChance <= 0)
+			{
+				DICEChance = 0;
+			}
+			if (BenefitRisk >= DICEChance)
 			{
 				printf("다행히 주변에 아무도 없었나 보네요!\n");
 				printf("플레이어의 소지금이 %d만큼 증가했습니다.\n", randomMoney);
 				GPlayer.Money += randomMoney;
 			}
-			else if (BenefitRisk < (50 - GPlayer.Luck))
+			else if (BenefitRisk < DICEChance)
 			{
 				printf("아앗! 허리를 숙인사이, 황금 고블린이 소지금을 강탕해 갔습니다!\n");
 				printf("플레이어의 소지금이 %d만큼 감소했습니다.\n", randomMoney);
@@ -690,13 +700,18 @@ void Random_Event_Encounter()
 
 		if (SelectAction == 0)
 		{
-			if (BenefitRisk >= (50 - GPlayer.Luck))
+			int DICEChance = 50 - GPlayer.Luck;
+			if (DICEChance <= 0)
+			{
+				DICEChance = 0;
+			}
+			if (BenefitRisk >= DICEChance)
 			{
 				printf("777! 럭키!!\n");
 				printf("플레이어의 LUCK이 %d만큼 증가했습니다.\n", randomLuck);
 				GPlayer.Luck += randomLuck;
 			}
-			else if (BenefitRisk < (50 - GPlayer.Luck))
+			else if (BenefitRisk < DICEChance)
 			{
 				printf("하긴, 이런곳에 떨어져있는게 정상적일린 없겠죠..\n");
 				printf("플레이어의 LUCK이 %d만큼 감소했습니다.\n", randomLuck);
@@ -747,14 +762,19 @@ void Random_Event_Encounter()
 
 		if (SelectAction == 0)
 		{
-			if (BenefitRisk >= (30 - GPlayer.Luck))
+			int DICEChance = 30 - GPlayer.Luck;
+			if (DICEChance <= 0)
+			{
+				DICEChance = 0;
+			}
+			if (BenefitRisk >= DICEChance)
 			{
 				printf("은은한 활력이 몸에 돕니다!\n");
 				printf("플레이어의 현재 체력 및 최대 체력이 %d만큼 증가했습니다.\n", randomhealth);
 				GPlayer.MaxHealth += randomhealth;
 				GPlayer.Health += randomhealth;
 			}
-			else if (BenefitRisk < (30 - GPlayer.Luck))
+			else if (BenefitRisk < DICEChance)
 			{
 				printf("크아악! 누가 독약을 넣어놨어!");
 				printf("플레이어의 현재 체력 및 최대 체력이 %d만큼 감소했습니다.\n", randomhealth);
