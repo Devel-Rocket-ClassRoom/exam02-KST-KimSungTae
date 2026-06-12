@@ -487,7 +487,6 @@ void Random_Event_Encounter()
 {
 	srand(time(0));
 	system("cls");
-	PrintChest();
 	printf("랜덤 이벤트를 인카운트 했습니다!\n");
 	Sleep(_getch());
 
@@ -502,7 +501,7 @@ void Random_Event_Encounter()
 		while (true)
 		{
 			system("cls");
-			PrintChest();
+			PrintMonster(0, 0, 0, 0, "Monster.Name", -1);
 			printf("떠돌이 몬스터 발견!!\n");
 			printf("처치 하시겠습니까?(선택에 따라 스테이터스 포인트를 드립니다.)\n");
 			// 메뉴 표시
@@ -550,7 +549,7 @@ void Random_Event_Encounter()
 		while (true)
 		{
 			system("cls");
-			PrintChest();
+			PrintEncount(2);
 			printf("무거운 무기 강화 재료를 얻었습니다.\n");
 			printf("이곳에서 강화 하시겠습니까?(선택에 따라 최대,최소 공격력이 증감합니다.)\n");
 			// 메뉴 표시
@@ -612,7 +611,7 @@ void Random_Event_Encounter()
 		while (true)
 		{
 			system("cls");
-			PrintChest();
+			PrintEncount(0);
 			printf("땅에 떨어진 금화를 발견했습니다!\n");
 			printf("허리를 숙여 가져갈까요?(선택에 따라 가진 소지금이 증감합니다.)\n");
 			// 메뉴 표시
@@ -667,7 +666,7 @@ void Random_Event_Encounter()
 		while (true)
 		{
 			system("cls");
-			PrintChest();
+			PrintEncount(1);
 			printf("이세계의 슬롯머신 등장!\n");
 			printf("판단은 없는데, 한판 해보시겠습니까?(선택에 따라 LUCK(행운)이 증감합니다.)\n");
 			// 메뉴 표시
@@ -724,7 +723,7 @@ void Random_Event_Encounter()
 		while (true)
 		{
 			system("cls");
-			PrintChest();
+			PrintEncount(4);
 			printf("정체를 알 수 없는 영약을 발견!!\n");
 			printf("마시겠습니까?(선택에 따라 최대체력이 증감합니다.)\n");
 			// 메뉴 표시
@@ -1090,6 +1089,7 @@ int  Healspot_Event_Encounter()
 	while (true)
 	{
 		system("cls");
+		PrintEncount(5);
 		printf("회복샘 이벤트를 인카운트 했습니다!\n");
 
 		//Sleep(_getch());
@@ -1172,6 +1172,7 @@ int  Healspot_RandomEvent_Encounter()
 	while (true)
 	{
 		system("cls");
+		PrintEncount(5);
 		printf("회복샘 이벤트를 인카운트 했습니다!\n");
 
 		//Sleep(_getch());
@@ -1257,6 +1258,8 @@ void Chest_Event_Encounter()
 
 	if (result == 0)
 	{
+		system("cls");
+		PrintEncount(4);
 
 		int randomhealth = GetRandomRange(10, 50);
 
@@ -1267,6 +1270,8 @@ void Chest_Event_Encounter()
 	}
 	else if (result <= 3 && result > 0)
 	{
+		system("cls");
+		PrintEncount(2);
 		int randomAttack = GetRandomRange(1, 3);
 
 		printf("새로운 무기를 얻었습니다!\n");
@@ -1276,6 +1281,8 @@ void Chest_Event_Encounter()
 	}
 	else if (result <= 6 && result > 3)
 	{
+		system("cls");
+		PrintEncount(3);
 		int randomDefense = GetRandomRange(1, 2);
 
 		printf("새로운 방어구를 얻었습니다!\n");

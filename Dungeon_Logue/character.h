@@ -14,6 +14,9 @@ void PrintChest();
 void PrintClear();
 void Player_LevelUp(int Reward);
 void PrintGameOver();
+void PrintEncount(int Pick);
+
+
 
 
 //플레이어 디폴트

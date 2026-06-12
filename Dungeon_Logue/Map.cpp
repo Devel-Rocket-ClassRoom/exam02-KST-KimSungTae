@@ -213,7 +213,9 @@ void DrawMap(int& h, int& w, int& event)
                 }
                 else if (temp == '?')   //랜덤이벤트(플레이어 강화 OR 약화 OR 돈획득 OR 몬스터 조우)
                 {
+                    SetColor(5);
                     printf("?");
+                    SetColor(7);
                     if (h == GPlayer.PlayerY && w == GPlayer.PlayerX)
                     {
                         event = 2;          //랜덤이벤트 조우 조건
@@ -251,7 +253,9 @@ void DrawMap(int& h, int& w, int& event)
                 }
                 else if (h == GPlayer.PlayerY && w == GPlayer.PlayerX)
                 {
+                    SetColor(11);
                     printf("P");
+                    SetColor(7);
                 }
                 else if (temp == '0' || temp == 'o')
                 {
