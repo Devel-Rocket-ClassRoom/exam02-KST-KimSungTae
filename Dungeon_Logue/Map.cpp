@@ -386,15 +386,11 @@ int MapUI() {
 
                 Selectkey = _getch();
 
-                if (Selectkey == 72)        // ↑
+                if (Selectkey == KEY_UP || Selectkey == KEY_DOWN)
                 {
-                    Selected = (Selected + 1) % 2;
+                    Selected = MoveCursor(Selected, 2, Selectkey);
                 }
-                else if (Selectkey == 80)   // ↓
-                {
-                    Selected = (Selected + 1) % 2;
-                }
-                else if (Selectkey == 'z'|| Selectkey == 'Z')//선택
+                else if (IsConfirm(Selectkey))//선택
                 {
                     system("cls");
                     if (Selected == 0)
@@ -414,11 +410,8 @@ int MapUI() {
                         Selectkey = '3';
                         return 3;
                     }
-					
-					
-
                 }
-                else if (Selectkey == 'x' || Selectkey == 'X' || Selectkey == 27) // ESC 또는 x 다시 누르면 종료
+                else if (IsCancel(Selectkey)) // ESC 또는 x 다시 누르면 종료
                 {
                     InMenu = false;
                 }
@@ -427,7 +420,7 @@ int MapUI() {
             // 메뉴 종료 후 다시 drawMap 루프를 타기 위해 break
             break;
         }
-        else if (Selectkey == 72)            //위
+        else if (Selectkey == KEY_UP)            //위
         {
 
             if (GPlayer.PlayerY > 1 && GPlayer.PlayerY < 18)
@@ -444,7 +437,7 @@ int MapUI() {
             break;
 
         }
-        else if (Selectkey == 80)       //아래
+        else if (Selectkey == KEY_DOWN)       //아래
         {
 
             if (GPlayer.PlayerY > 1 && GPlayer.PlayerY < 18)
@@ -460,7 +453,7 @@ int MapUI() {
             IsOnEventTile = false;
             break;
         }
-        else if (Selectkey == 75)       //왼
+        else if (Selectkey == KEY_LEFT)       //왼
         {
             if (GPlayer.PlayerX > 1 && GPlayer.PlayerX < 98)
             {
@@ -475,7 +468,7 @@ int MapUI() {
             IsOnEventTile = false;
             break;
         }
-        else if (Selectkey == 77)       //오
+        else if (Selectkey == KEY_RIGHT)       //오
         {
             if (GPlayer.PlayerX > 1 && GPlayer.PlayerX < 98)
             {

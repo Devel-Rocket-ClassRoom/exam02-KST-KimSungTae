@@ -37,16 +37,14 @@ void Random_Event_Encounter()
 			else printf("  2. 체력 아깝다. 도망친다. (기회가 날라갑니다!)\n");
 
 			Selectkey = _getch();
-			if (Selectkey == 72) {  // 위
-				SelectAction = (SelectAction + 1) % 2;
+			if (Selectkey == KEY_UP || Selectkey == KEY_DOWN) 
+			{
+				SelectAction = MoveCursor(SelectAction, 2, Selectkey);
 			}
-			else if (Selectkey == 80) {  // 아래
-				SelectAction = (SelectAction + 1) % 2;
-			}
-			else if (Selectkey == 'z' || Selectkey == 'Z') {
+			else if (IsConfirm(Selectkey)) 
+			{
 				break;
 			}
-
 		}
 
 		if (SelectAction == 0)
@@ -85,13 +83,12 @@ void Random_Event_Encounter()
 			else printf("  2. 불길하다. 강화하지않는다.(강화 재료를 버리고 가야합니다.)\n");
 
 			Selectkey = _getch();
-			if (Selectkey == 72) {  // 위
-				SelectAction = (SelectAction + 1) % 2;
+			if (Selectkey == KEY_UP || Selectkey == KEY_DOWN)
+			{
+				SelectAction = MoveCursor(SelectAction, 2, Selectkey);
 			}
-			else if (Selectkey == 80) {  // 아래
-				SelectAction = (SelectAction + 1) % 2;
-			}
-			else if (Selectkey == 'z' || Selectkey == 'Z') {
+			else if (IsConfirm(Selectkey))
+			{
 				break;
 			}
 
@@ -152,16 +149,14 @@ void Random_Event_Encounter()
 			else printf("  2. 황금 보기를 돌같이 하라....(금화를 그냥 지나칩니다.)\n");
 
 			Selectkey = _getch();
-			if (Selectkey == 72) {  // 위
-				SelectAction = (SelectAction + 1) % 2;
+			if (Selectkey == KEY_UP || Selectkey == KEY_DOWN)
+			{
+				SelectAction = MoveCursor(SelectAction, 2, Selectkey);
 			}
-			else if (Selectkey == 80) {  // 아래
-				SelectAction = (SelectAction + 1) % 2;
-			}
-			else if (Selectkey == 'z' || Selectkey == 'Z') {
+			else if (IsConfirm(Selectkey))
+			{
 				break;
 			}
-
 		}
 
 		if (SelectAction == 0)
@@ -212,16 +207,14 @@ void Random_Event_Encounter()
 			else printf("  2. 도박은 좀;; (슬롯머신을 그냥 지나칩니다.)\n");
 
 			Selectkey = _getch();
-			if (Selectkey == 72) {  // 위
-				SelectAction = (SelectAction + 1) % 2;
+			if (Selectkey == KEY_UP || Selectkey == KEY_DOWN)
+			{
+				SelectAction = MoveCursor(SelectAction, 2, Selectkey);
 			}
-			else if (Selectkey == 80) {  // 아래
-				SelectAction = (SelectAction + 1) % 2;
-			}
-			else if (Selectkey == 'z' || Selectkey == 'Z') {
+			else if (IsConfirm(Selectkey))
+			{
 				break;
 			}
-
 		}
 
 		if (SelectAction == 0)
@@ -274,16 +267,14 @@ void Random_Event_Encounter()
 			else printf("  2. 안마신다.(기회가 날라갑니다!)\n");
 
 			Selectkey = _getch();
-			if (Selectkey == 72) {  // 위
-				SelectAction = (SelectAction + 1) % 2;
+			if (Selectkey == KEY_UP || Selectkey == KEY_DOWN)
+			{
+				SelectAction = MoveCursor(SelectAction, 2, Selectkey);
 			}
-			else if (Selectkey == 80) {  // 아래
-				SelectAction = (SelectAction + 1) % 2;
-			}
-			else if (Selectkey == 'z' || Selectkey == 'Z') {
+			else if (IsConfirm(Selectkey))
+			{
 				break;
 			}
-
 		}
 
 		if (SelectAction == 0)
@@ -431,7 +422,7 @@ int Shop_Event_Encounter()
 		char Selectkey = _getch();
 		while (true)
 		{
-			if (Selectkey == 'z' || Selectkey == 'Z')
+			if (IsConfirm(Selectkey))
 			{
 				if (Select_NPC_Menu == 0)
 				{
@@ -593,7 +584,7 @@ int Shop_Event_Encounter()
 			}
 
 
-			if (Selectkey == 72 || Selectkey == 75)            //위,왼
+			if (Selectkey == KEY_UP || Selectkey == KEY_LEFT)            //위,왼
 			{
 				Select_NPC_Menu--;
 				Select_NPC_Menu = (Select_NPC_Menu + 8) % 8;
@@ -601,7 +592,7 @@ int Shop_Event_Encounter()
 				break;
 
 			}
-			else if (Selectkey == 80 || Selectkey == 77)       //오,아래
+			else if (Selectkey == KEY_DOWN || Selectkey == KEY_RIGHT)       //오,아래
 			{
 				Select_NPC_Menu++;
 				Select_NPC_Menu = (Select_NPC_Menu + 8) % 8;
@@ -661,22 +652,13 @@ int  Healspot_Event_Encounter()
 		while (true)
 		{
 			Selectkey = _getch();
-			if (Selectkey == 72)    //위 방향키
+			if (Selectkey == KEY_UP|| Selectkey == KEY_DOWN)
 			{
-
-				SelectMenu = SelectMenu + 2 - 1;
-				SelectMenu = SelectMenu % 2;
+				SelectMenu = MoveCursor(SelectMenu, 2, Selectkey);
 				system("cls");
 				break;
 			}
-			else if (Selectkey == 80)   //아래 방향키
-			{
-				SelectMenu = SelectMenu + 2 + 1;
-				SelectMenu = SelectMenu % 2;
-				system("cls");
-				break;
-			}
-			if (Selectkey == 'z' || Selectkey == 'Z')
+			if (IsConfirm(Selectkey))
 			{
 				if (SelectMenu == 0)
 				{
@@ -744,22 +726,14 @@ int  Healspot_RandomEvent_Encounter()
 		while (true)
 		{
 			Selectkey = _getch();
-			if (Selectkey == 72)    //위 방향키
+			if (Selectkey == KEY_UP || Selectkey == KEY_DOWN)    //위 방향키
 			{
+				MoveCursor(SelectMenu, 2, Selectkey);
+				system("cls");
+				break;
+			}
 
-				SelectMenu = SelectMenu + 2 - 1;
-				SelectMenu = SelectMenu % 2;
-				system("cls");
-				break;
-			}
-			else if (Selectkey == 80)   //아래 방향키
-			{
-				SelectMenu = SelectMenu + 2 + 1;
-				SelectMenu = SelectMenu % 2;
-				system("cls");
-				break;
-			}
-			if (Selectkey == 'z' || Selectkey == 'Z')
+			if (IsConfirm(Selectkey))
 			{
 				if (SelectMenu == 0)
 				{

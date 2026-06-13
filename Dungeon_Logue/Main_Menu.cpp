@@ -3,9 +3,6 @@
 #include "Utill.h"
 
 
-void initScreen() {
-    system("cls");
-}
 
 int MenuDraw(int MenuSelect)
 {
@@ -52,22 +49,14 @@ int MenuDraw(int MenuSelect)
         while (true)
         {
             Selectkey = _getch();
-            if (Selectkey == 72)    //위 방향키
+            if (Selectkey == KEY_UP||Selectkey == KEY_DOWN)
             {
 
-                SelectMenu = SelectMenu + 3 - 1;
-                SelectMenu = SelectMenu % 3;
-                initScreen();
+				SelectMenu = MoveCursor(SelectMenu, 3, Selectkey);
+                system("cls");
                 break;
             }
-            else if (Selectkey == 80)   //아래 방향키
-            {
-                SelectMenu = SelectMenu + 3 + 1;
-                SelectMenu = SelectMenu % 3;
-                initScreen();
-                break;
-            }
-            if (Selectkey == 'z' || Selectkey == 'Z')
+            if (IsConfirm(Selectkey))
             {
                 if (SelectMenu == 0)
                 {

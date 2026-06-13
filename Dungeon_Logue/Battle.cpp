@@ -174,23 +174,33 @@ void Monster_Event_Encounter(int InLevel, int Bossif)
 			while (true)
 			{
 				// 메뉴 표시
-				if (SelectAction == 0) printf("> 1. 공격\n");
-				else printf("  1. 공격\n");
-				if (SelectAction == 1) printf("> 2. 방어\n");
-				else printf("  2. 방어\n");
-				if (SelectAction == 2) printf("> 3. 스킬 사용\n");
-				else printf("  3. 스킬 사용\n");
+				if (SelectAction == 0) 
+					printf("> 1. 공격\n");
+				else 
+					printf("  1. 공격\n");
+
+				if (SelectAction == 1)
+					printf("> 2. 방어\n");
+				else 
+					printf("  2. 방어\n");
+
+				if (SelectAction == 2) 
+					printf("> 3. 스킬 사용\n");
+				else 
+					printf("  3. 스킬 사용\n");
+
+
 
 				Selectkey = _getch();
-				if (Selectkey == 72) {  // 위
-					SelectAction = (SelectAction + 2) % 3;
+				if (Selectkey == KEY_UP || Selectkey == KEY_DOWN)
+				{
+					SelectAction = MoveCursor(SelectAction, 3, Selectkey);
 				}
-				else if (Selectkey == 80) {  // 아래
-					SelectAction = (SelectAction + 1) % 3;
-				}
-				else if (Selectkey == 'z' || Selectkey == 'Z') {
+				else if (IsConfirm(Selectkey)) 
+				{
 					break;
 				}
+
 				system("cls");
 				PrintPlayerBattleState(GPlayer.Health, GPlayer.MaxHealth, GPlayer.Mana, GPlayer.MaxMana, GPlayer.AttackPowerMin, GPlayer.AttackPowerMax, GPlayer.Defense, GPlayer.CriticalChance + GPlayer.Luck);
 
@@ -306,15 +316,11 @@ void Monster_Event_Encounter(int InLevel, int Bossif)
 
 					// 방향키 및 선택 처리
 					SkillKey = _getch();
-					if (SkillKey == 72) // 위
+					if (SkillKey == KEY_UP||SkillKey==KEY_DOWN)
 					{
-						SkillMenu = (SkillMenu + menuIndex - 1) % menuIndex;
+						SkillMenu=MoveCursor(SkillMenu, menuIndex, SkillKey);
 					}
-					else if (SkillKey == 80) // 아래
-					{
-						SkillMenu = (SkillMenu + 1) % menuIndex;
-					}
-					else if (SkillKey == 'z' || SkillKey == 'Z')
+					else if (IsConfirm(SkillKey))
 					{
 						// 메뉴 인덱스에 따라 행동 결정
 						int currentMenu = 0;

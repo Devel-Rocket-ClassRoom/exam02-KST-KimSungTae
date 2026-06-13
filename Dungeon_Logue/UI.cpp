@@ -4,7 +4,7 @@
 #include "Art.h"
 
 
-
+// 플레이어 상태창 출력
 void PrintPlayerState(int Health, int MaxHealth,int Mana, int MaxMana, int AttackPowerMin, int AttackPowerMax, int Defense, int Money)
 {
     printf("┌─────────────────────────────────────────────────────────────────────────────────────────────────┐\n");
@@ -16,6 +16,7 @@ void PrintPlayerState(int Health, int MaxHealth,int Mana, int MaxMana, int Attac
     printf("└───────────────┘                                                                 └───────────────┘\n");
 }
 
+// 플레이어 전투 상태창 출력
 void PrintPlayerBattleState(int Health, int MaxHealth, int Mana, int MaxMana, int AttackPowerMin, int AttackPowerMax, int Defense, int Critical)
 {
     printf("┌─────────────────────────────────────────────────────────────────────────────────────────────────┬────────────────┐\n");
@@ -37,6 +38,7 @@ void drawCharMenu()
     drawCharMenuWithSelection(-1);  // 선택 없음
 }
 
+// 스탯 창 출력 및 스탯 포인트 분배
 bool PrintPlayerStatus(int& Statusselected)
 {
     system("cls");
@@ -51,16 +53,11 @@ bool PrintPlayerStatus(int& Statusselected)
     printf("4. 럭 +1 (필요 스탯 포인트: 1) %s\n\n", Statusselected == 4 ? "  <" : "");
     printf("6. 돌아가기(또는 X키) %s\n\n", Statusselected == 5 ? "  <" : "");
 
-    char StatusSelectkey = _getch();
-    if (StatusSelectkey == 72)        // ↑
-    {
-        Statusselected = (Statusselected + 5) % 6;
-    }
-    else if (StatusSelectkey == 80)   // ↓
-    {
-        Statusselected = (Statusselected + 7) % 6;
-    }
-    else if (StatusSelectkey == 'z' || StatusSelectkey == 'Z')//선택
+    int StatusSelectkey = _getch();
+    // 메뉴 선택 커서 이동 (각각, 커서/메뉴갯수/입력받을 변수)
+    Statusselected = MoveCursor(Statusselected, 6, StatusSelectkey);
+
+    if (IsConfirm(StatusSelectkey))//선택
     {
         if (Statusselected == 5)
         {
@@ -119,14 +116,14 @@ bool PrintPlayerStatus(int& Statusselected)
 		
 
     }
-    else if (StatusSelectkey == 'x' || StatusSelectkey == 'X' || StatusSelectkey == 27) // ESC
+    else if (IsCancel(StatusSelectkey)) // ESC
     {
         return false;
     }
     return true;
 }
 
-
+// 몬스터 체력바 출력
 void PrintMonsterHealthBar(int current, int maxHP, std::string Name)
 {
     if (maxHP <= 0) maxHP = 1;
@@ -134,13 +131,24 @@ void PrintMonsterHealthBar(int current, int maxHP, std::string Name)
     float percent = (float)current / maxHP;
     int filled = (int)(percent * barWidth);
 
-    if (GPlayer.Bossif >= 1)
+    if(GPlayer.Bossif == 0)
     {
-        SetColor(4);
+        SetColor(6);
+	}
+    else if (GPlayer.Bossif == 1)
+    {
+        if (GPlayer.HaveKey == 1)
+        {
+            SetColor(6);
+        }
+        else
+        {
+            SetColor(4);
+        }
     }
     else
     {
-        SetColor(6);
+        SetColor(4);
     }
     printf("%s HP: ", Name.c_str());
     printf("[");
@@ -160,6 +168,7 @@ void PrintMonsterHealthBar(int current, int maxHP, std::string Name)
     SetColor(7);
 }
 
+// 플레이어 경험치바 출력
 void PrintPlayerEXPbar(int currentEXP, int maxEXP, int Level)
 {
     if (maxEXP <= 0) maxEXP = 1;
