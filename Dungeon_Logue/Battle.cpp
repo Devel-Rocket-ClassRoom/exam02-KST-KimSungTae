@@ -30,6 +30,11 @@ void Monster_Event_Encounter(int InLevel, int Bossif)
 
 	MonsterDefault Monster; // Monster 변수를 함수 시작부에 선언
 
+	if (Bossif == 0 || Bossif == 1)
+		PlayBGM("Enemy_Battle_BGM", 100);
+	else
+		PlayBGM("BOSS_Battle_BGM", 120);
+
 	if (Bossif == 0)
 	{
 		if (Level == 0)

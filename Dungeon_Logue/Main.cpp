@@ -20,16 +20,21 @@ int main()
         char exePath[MAX_PATH];
         GetModuleFileNameA(NULL, exePath, MAX_PATH);
 
+        char workDir[MAX_PATH];
+        GetCurrentDirectoryA(MAX_PATH, workDir);
+
         // launcher 창을 최대한 빠르게 숨김
         HWND hwnd = GetConsoleWindow();
         if (hwnd) ShowWindow(hwnd, SW_HIDE);
 
-        std::string cmd = "wt.exe --maximized cmd /c \"" + std::string(exePath) + "\"";
+        std::string cmd = "wt.exe --maximized -d \"" + std::string(workDir) +
+            "\" cmd /c \"" + std::string(exePath) + "\"";
         system(cmd.c_str());
 
         return 0;  // launcher 창 종료
     }
 
+    PlayBGM("Main_BGM", 140);
 
     int MenuSelect=-1;
     while (MenuSelect!=1)

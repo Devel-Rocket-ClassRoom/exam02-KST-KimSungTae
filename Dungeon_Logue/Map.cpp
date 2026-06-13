@@ -330,6 +330,7 @@ int MapUI() {
         Monster_Event_Encounter(GPlayer.MonsterLevel,0);
         GPlayer.MonsterLevel++;
         event = -1;
+        PlayBGM("Main_BGM", 140);
         return 0;
     case 2: //랜덤 조우 이벤트
         Random_Event_Encounter();
@@ -353,6 +354,7 @@ int MapUI() {
     case 7: //중간보스 조우 이벤트
         Middle_Boss_Encounter();
         event = -1;
+        PlayBGM("Main_BGM", 140);
         return 0;
     case 8: //최종보스 조우 이벤트
         Boss_Encounter();
