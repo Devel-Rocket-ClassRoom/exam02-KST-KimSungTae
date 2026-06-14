@@ -364,6 +364,10 @@ int MapUI() {
     }
 
     //플레이어 조작
+
+    int PrevX = GPlayer.PlayerX;
+    int PrevY = GPlayer.PlayerY;
+
     Selectkey = _getch();
     while (true)
     {
@@ -491,11 +495,14 @@ int MapUI() {
         }
     }
 
+    // 실제로 이동했을 때만(좌표가 바뀐 경우) 랜덤 인카운터 판정
+    bool Moved = (GPlayer.PlayerX != PrevX) || (GPlayer.PlayerY != PrevY);
 
-    if (event == -1)   //이동한 칸에 이벤트가 없을 때, 3% 확률로 랜덤 이벤트 발생
+    if (event == -1 && Moved)   //이동한 칸에 이벤트가 없을 때, 3% 확률로 랜덤 이벤트 발생
     {
         RandomEventChance = GetRandomRange(1, 100);
-        if (RandomEventChance <= 3 && event == -1) //맵 이동시 3% 확률로 랜덤 이벤트 발생
+        //맵 이동시 3% 확률로 랜덤 이벤트 발생
+        if (RandomEventChance <= 3 && event == -1)
         {
             Random_Encounter(PlayerLocatition);
             return 0;

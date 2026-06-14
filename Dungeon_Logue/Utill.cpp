@@ -12,7 +12,11 @@
 
 int GetRandomRange(int Min, int Max)
 {
-    return Min + rand() % (Max - Min + 1);  // Min ~ Max(양끝 포함)
+    if (Min > Max)
+    {
+        int temp = Min; Min = Max; Max = temp;
+    }
+    return Min + rand() % (Max - Min + 1);
 }
 
 void SetColor(int Color)

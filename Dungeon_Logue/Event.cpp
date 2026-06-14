@@ -114,15 +114,20 @@ void Random_Event_Encounter()
 				printf("플레이어의 최대, 최소 공격력이 %d만큼 감소했습니다.\n", randomAttack);
 
 				GPlayer.AttackPowerMax -= randomAttack;
-				if (GPlayer.AttackPowerMax <= 1)
+				if (GPlayer.AttackPowerMax < 2)
 				{
-					GPlayer.AttackPowerMax = 1;
+					GPlayer.AttackPowerMax = 2;
 				}
 
 				GPlayer.AttackPowerMin -= randomAttack;
-				if (GPlayer.AttackPowerMin <= 1)
+				if (GPlayer.AttackPowerMin < 1)
 				{
 					GPlayer.AttackPowerMin = 1;
+				}
+
+				if (GPlayer.AttackPowerMin > GPlayer.AttackPowerMax)
+				{
+					GPlayer.AttackPowerMin = GPlayer.AttackPowerMax;
 				}
 			}
 		}
@@ -174,7 +179,7 @@ void Random_Event_Encounter()
 			}
 			else if (BenefitRisk < DICEChance)
 			{
-				printf("아앗! 허리를 숙인사이, 황금 고블린이 소지금을 강탕해 갔습니다!\n");
+				printf("아앗! 허리를 숙인사이, 황금 고블린이 소지금을 강탈해 갔습니다!\n");
 				printf("플레이어의 소지금이 %d만큼 감소했습니다.\n", randomMoney);
 
 				GPlayer.Money -= randomMoney;
@@ -728,7 +733,7 @@ int  Healspot_RandomEvent_Encounter()
 			Selectkey = _getch();
 			if (Selectkey == KEY_UP || Selectkey == KEY_DOWN)    //위 방향키
 			{
-				MoveCursor(SelectMenu, 2, Selectkey);
+				SelectMenu = MoveCursor(SelectMenu, 2, Selectkey);
 				system("cls");
 				break;
 			}
@@ -830,6 +835,7 @@ int Random_Encounter(int PlayerLocatition)
 		if (EncounterNumber == 0)
 		{
 			Monster_Event_Encounter(GPlayer.MonsterLevel,0);
+			PlayBGM("Main_BGM", 140);
 			return 0;
 		}
 		else if (EncounterNumber == 1)
