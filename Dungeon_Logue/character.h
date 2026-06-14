@@ -73,7 +73,7 @@ struct MonsterDefault
         MaxHealth += levelBonus;
         Health += levelBonus;
 
-        AttackPowerMin += (AttackPowerMin * InLevel) / 2;
+        AttackPowerMin += (AttackPowerMin * InLevel) / 3;
         AttackPowerMax += (AttackPowerMax * InLevel) / 3;
         if (InLevel > 0)
         {
