@@ -12,7 +12,7 @@ void Player_LevelUp(int Reward)
     printf("Level Up!\n");
     printf("LV.%d -> LV.%d가 되었습니다!\n",GPlayer.Level,GPlayer.Level+1);
     printf("StatusPoint가 3 포인트 지급되었습니다!\n");
-    printf("HP와 MP가 10% 회복되었습니다.");
+    printf("HP와 MP가 10%% 회복되었습니다.");
 	GPlayer.Health += GPlayer.MaxHealth / 10;
 	GPlayer.Mana += GPlayer.MaxMana / 10;
     GPlayer.Experience -= GPlayer.ExperienceToNextLevel;

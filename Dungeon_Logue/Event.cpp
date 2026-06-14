@@ -857,7 +857,7 @@ int Random_Encounter(int PlayerLocatition)
 //7 중간보스 인카운트
 void Middle_Boss_Encounter()
 {
-	Monster_Event_Encounter(GPlayer.MonsterLevel + 6, GPlayer.Bossif);
+	Monster_Event_Encounter(GPlayer.MonsterLevel + 9, GPlayer.Bossif);
 	GPlayer.HaveKey = 1;
 	OpenMiddleBossDoor();
 }
@@ -865,7 +865,7 @@ void Middle_Boss_Encounter()
 //8 최종보스 인카운트
 void Boss_Encounter()
 {
-	Monster_Event_Encounter(GPlayer.MonsterLevel + 12, GPlayer.Bossif);
+	Monster_Event_Encounter(GPlayer.MonsterLevel + 30, GPlayer.Bossif);
 }
 
 //9 던전 클리어 및 엔딩
