@@ -123,8 +123,8 @@ void Monster_Event_Encounter(int InLevel, int Bossif)
 	else if (Bossif == 2)
 	{
 		Monster = MonsterDefault("최종 보스 : 던전드래곤", Level);
-		Monster.Health *= 3;
-		Monster.MaxHealth *= 3;
+		Monster.Health *= 2.5;
+		Monster.MaxHealth *= 2.5;
 		PrintMonster(Level, Monster.Health, Monster.MaxHealth, 2, Monster.Name, -1);
 	}
 
