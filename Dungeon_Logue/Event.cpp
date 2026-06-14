@@ -865,7 +865,7 @@ void Middle_Boss_Encounter()
 //8 최종보스 인카운트
 void Boss_Encounter()
 {
-	Monster_Event_Encounter(GPlayer.MonsterLevel + 30, GPlayer.Bossif);
+	Monster_Event_Encounter(GPlayer.MonsterLevel + 45, GPlayer.Bossif);
 }
 
 //9 던전 클리어 및 엔딩
